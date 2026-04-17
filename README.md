@@ -1,5 +1,5 @@
 # Milk
-A simple tool for Grow a Garden players! **This script is entirely free and keyless**; I originally made it last year for the Summer Harvest event for personal use. Since Grow a Garden's events are getting more grindy, I decided to release my script to the public so that people make progress without spending an unhealthy amount of time on the screen. 
+A simple tool for Grow a Garden players! **This script is entirely free and keyless**; I originally made it last year for the Summer Harvest event for personal use. Since Grow a Garden's events are getting more grindy, I decided to release my script to the public so that people make can progress without spending an unhealthy amount of time on the screen. I will do my best to update this script accordingly as Grow a Garden updates!
 ## Loadstring
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/126884695634066"))()
