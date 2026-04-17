@@ -1,5 +1,5 @@
 # Milk
-A simple tool for Grow a Garden players! **This script is entirely free and keyless!**
+Milk is a script with several automation features for Grow a Garden! **It is entirely free and keyless!**
 
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 ## Loadstring
@@ -11,6 +11,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
 > Discord server: https://discord.gg/Dt79RuG4N3
 ## Credits
 The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.xyz/starlight), which is developed by [Nebula Softworks](https://github.com/Nebula-Softworks).
+
 ## Supported Executors
 <details>
   <summary>Opiumware</summary>
