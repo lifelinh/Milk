@@ -17,6 +17,11 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   <summary>Opiumware</summary>
   I currently use this executor to develop and test this script. Everything should work!
 </details>
+<details>
+  <summary>Delta</summary>
+  A few Delta users tested it out, and confirmed that it is working!
+</details>
+
 
 ## Partially Supported Executors
 <details>
@@ -32,10 +37,6 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
 <details>
   <summary>Solara</summary>
   My script's Auto-Farm heavily relies on being able to fire proximity prompts to harvest, and I know that Solara does not support that. However, other features could still work!
-</details>
-<details>
-  <summary>Delta</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
 </details>
 <details>
   <summary>Volt</summary>
