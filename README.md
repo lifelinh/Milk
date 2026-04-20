@@ -8,7 +8,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
 ```
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
-> Discord server: https://discord.gg/Dt79RuG4N3
+> If you need any help, join the Discord server: https://discord.gg/Dt79RuG4N3
 ## Credits
 The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.xyz/starlight), which is developed by [Nebula Softworks](https://github.com/Nebula-Softworks).
 
