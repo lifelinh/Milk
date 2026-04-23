@@ -1,5 +1,5 @@
 # Milk
-Milk is a script with several automation features for Grow a Garden! **It is entirely free and keyless!**
+Milk is a script with several automation features for Grow a Garden. It is entirely free and keyless!
 
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 ## Loadstring
@@ -14,71 +14,70 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
 
 ## Supported Executors
 <details>
-  <summary>Opiumware</summary>
-  I currently use this executor to develop and test this script. Everything should work!
+  <summary>Delta</summary>
+  Delta is able to use all of Milk's features!
 </details>
 <details>
-  <summary>Delta</summary>
-  A few Delta users tested it out, and confirmed that it is working!
+  <summary>Seliware</summary>
+  Seliware is able to use all of Milk's features!
 </details>
-
+<details>
+  <summary>Opiumware</summary>
+  Opiumware is able to use all of Milk's features!
+</details>
 
 ## Partially Supported Executors
 <details>
+  <summary>Xeno</summary>
+  All features will work with Xeno, but Auto-Farm will run at a reduced speed.
+</details>
+<details>
+  <summary>Solara</summary>
+  All features will work with Solara, but Auto-Farm will run at a reduced speed.
+</details>
+<details>
   <summary>MacSploit</summary>
-  I have ran this script with MacSploit several times, and all features will work. However, Auto-Farm features that harvest plants automatically might stop working after running for a while.
+  All features will work with MacSploit, but Auto-Farm may stop working after being enabled for long periods.
 </details>
 
 ## Untested Executors
 <details>
-  <summary>Xeno</summary>
-  My script's Auto-Farm heavily relies on being able to fire proximity prompts to harvest, and I know that Xeno does not support that. However, other features could still work!
-</details>
-<details>
-  <summary>Solara</summary>
-  My script's Auto-Farm heavily relies on being able to fire proximity prompts to harvest, and I know that Solara does not support that. However, other features could still work!
-</details>
-<details>
   <summary>Volt</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Potassium</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Wave</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Synapse Z</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Seliware</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Cosmic</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Isaeva</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
-</details>
-<details>
-  <summary>Volcano</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
+  Unknown functionality. If you use Volt, please help test compatibility!
 </details>
 <details>
   <summary>Velocity</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
+  Unknown functionality. If you use Velocity, please help test compatibility!
+</details>
+<details>
+  <summary>Potassium</summary>
+  Unknown functionality. If you use Potassium, please help test compatibility!
+</details>
+<details>
+  <summary>Wave</summary>
+  Unknown functionality. If you use Wave, please help test compatibility!
+</details>
+<details>
+  <summary>Synapse Z</summary>
+  Unknown functionality. If you use Synapse Z, please help test compatibility!
+</details>
+<details>
+  <summary>Cosmic</summary>
+  Unknown functionality. If you use Cosmic, please help test compatibility!
+</details>
+<details>
+  <summary>Isaeva</summary>
+  Unknown functionality. If you use Isaeva, please help test compatibility!
+</details>
+<details>
+  <summary>Volcano</summary>
+  Unknown functionality. If you use Volcano, please help test compatibility!
 </details>
 <details>
   <summary>bunni.fun</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
+  Unknown functionality. If you use bunni.fun, please help test compatibility!
 </details>
 <details>
   <summary>SirHurt</summary>
-  Unknown functionality. If you use this executor, please help me find out if my script can run on it!
+  Unknown functionality. If you use SirHurt, please help test compatibility!
 </details>
