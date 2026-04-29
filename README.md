@@ -15,69 +15,85 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
 ## Supported Executors
 <details>
   <summary>Delta</summary>
+
   Delta is able to use all of Milk's features!
 </details>
 <details>
   <summary>Seliware</summary>
+
   Seliware is able to use all of Milk's features!
 </details>
 <details>
   <summary>Opiumware</summary>
+
   Opiumware is able to use all of Milk's features!
 </details>
 
 ## Partially Supported Executors
 <details>
   <summary>Xeno</summary>
+
   All features will work with Xeno, but Auto-Farm will run at a reduced speed.
 </details>
 <details>
   <summary>Solara</summary>
+
   All features will work with Solara, but Auto-Farm will run at a reduced speed.
 </details>
 <details>
   <summary>MacSploit</summary>
+
   All features will work with MacSploit, but Auto-Farm may stop working after being enabled for long periods.
 </details>
 
 ## Untested Executors
 <details>
   <summary>Volt</summary>
+
   Unknown functionality. If you use Volt, please help test compatibility!
 </details>
 <details>
   <summary>Velocity</summary>
+
   Unknown functionality. If you use Velocity, please help test compatibility!
 </details>
 <details>
   <summary>Potassium</summary>
+
   Unknown functionality. If you use Potassium, please help test compatibility!
 </details>
 <details>
   <summary>Wave</summary>
+
   Unknown functionality. If you use Wave, please help test compatibility!
 </details>
 <details>
   <summary>Synapse Z</summary>
+
   Unknown functionality. If you use Synapse Z, please help test compatibility!
 </details>
 <details>
   <summary>Cosmic</summary>
+
   Unknown functionality. If you use Cosmic, please help test compatibility!
 </details>
 <details>
   <summary>Isaeva</summary>
+
   Unknown functionality. If you use Isaeva, please help test compatibility!
 </details>
 <details>
   <summary>Volcano</summary>
+
   Unknown functionality. If you use Volcano, please help test compatibility!
 </details>
 <details>
   <summary>bunni.fun</summary>
+
   Unknown functionality. If you use bunni.fun, please help test compatibility!
 </details>
 <details>
   <summary>SirHurt</summary>
+
   Unknown functionality. If you use SirHurt, please help test compatibility!
 </details>
