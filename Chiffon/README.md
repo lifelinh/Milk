@@ -7,7 +7,6 @@ This is kept open-source for educational purposes and utility; it is others are 
 ## Collection
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
-  
   This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. 
 
   The automated cycle involves starting the recipe, inputing the necessary items, begining crafting, then waiting until crafting is finished before claiming the item.
