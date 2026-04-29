@@ -7,12 +7,12 @@ This is kept open-source for educational purposes and utility; it is others are 
 ## Collection
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
-  
-  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. 
 
-  The automated cycle involves starting the recipe, inputing the necessary items, begining crafting, then waiting until crafting is finished before claiming the item.
+  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic.
 
-  In the event that the player does not have the needed crafting ingredients, the feature will restart and continue trying until the recipe can be crafted.
+  The cycle involves starting the recipe, inputing the necessary items, begining crafting, then waiting until crafting is finished before claiming the item.
+
+  If the player does not have the needed crafting ingredients, the feature will restart and continue trying until the recipe can be crafted.
   ### Loadstring
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/126884695634066"))()
