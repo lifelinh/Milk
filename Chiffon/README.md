@@ -7,9 +7,10 @@ This is kept open-source for educational purposes and utility; it is others are 
 ## Collection
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
-  This module contains toggles and dropdown menus for selecting a recipe and automatically crafting it repeatedly. 
+  
+  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. 
 
-  The feature starts the recipe, inputs the necessary items, begins crafting, then waits until crafting is finished to claim the item.
+  The automated cycle involves starting the recipe, inputing the necessary items, begining crafting, then waiting until crafting is finished before claiming the item.
 
   In the event that the player does not have the needed crafting ingredients, the feature will restart and continue trying until the recipe can be crafted.
   ### Loadstring
