@@ -4,7 +4,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 if Executor == "Xeno" or Executor == "Solara" then
-    LocalPlayer:Kick("This Chiffon module does not work on Xeno or Solara. Please use the main loadstring for Milk.")
+    LocalPlayer:Kick("This module does not work on Xeno or Solara. Please use the main loadstring for Milk.")
 end
 
 local Starlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Starlight-UI-Milk/refs/heads/master/Source.lua"))()  
