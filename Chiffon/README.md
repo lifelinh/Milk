@@ -17,7 +17,7 @@ This is kept open-source for educational purposes and utility; it is others are 
   This module will not work on Solara or Xeno, as it uses `require()` to access a function that submits items for crafting.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Craft"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Craft.lua"))()
 ```
 </details>
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
