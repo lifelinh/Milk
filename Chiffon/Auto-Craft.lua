@@ -110,7 +110,7 @@ local Window = Starlight:CreateWindow({
 })
 
 Window:CreateHomeTab({
-    SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware"}, 
+    SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware", "Madium"}, 
     UnsupportedExecutors = {"Xeno", "Solara"},
     DiscordInvite = "Dt79RuG4N3",
     Backdrop = "111065788714232", 
