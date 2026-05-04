@@ -19,6 +19,11 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Delta is able to use all of Milk's features!
 </details>
 <details>
+  <summary>Madium</summary>
+
+  Madium is able to use all of Milk's features!
+</details>
+<details>
   <summary>Seliware</summary>
 
   Seliware is able to use all of Milk's features!
@@ -33,17 +38,17 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
 <details>
   <summary>Xeno</summary>
 
-  All features will work with Xeno, but Auto-Farm will run at a reduced speed.
+  All features will work with Xeno, but Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
 </details>
 <details>
   <summary>Solara</summary>
 
-  All features will work with Solara, but Auto-Farm will run at a reduced speed.
+  All features will work with Solara, but Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
 </details>
 <details>
   <summary>MacSploit</summary>
 
-  All features will work with MacSploit, but Auto-Farm may stop working after being enabled for long periods.
+  All features will work with MacSploit, but non-Hyperspeed modes for Auto-Farm may stop working after being enabled for long periods.
 </details>
 
 ## Untested Executors
@@ -73,6 +78,11 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Unknown functionality. If you use Synapse Z, please help test compatibility!
 </details>
 <details>
+  <summary>SirHurt</summary>
+
+  Unknown functionality. If you use SirHurt, please help test compatibility!
+</details>
+<details>
   <summary>Cosmic</summary>
 
   Unknown functionality. If you use Cosmic, please help test compatibility!
@@ -91,9 +101,4 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   <summary>bunni.fun</summary>
 
   Unknown functionality. If you use bunni.fun, please help test compatibility!
-</details>
-<details>
-  <summary>SirHurt</summary>
-
-  Unknown functionality. If you use SirHurt, please help test compatibility!
 </details>
