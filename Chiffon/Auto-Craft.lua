@@ -236,7 +236,8 @@ GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-    AutoCraftEnabled = nil
+    AutoCraftGearEnabled = nil
+    AutoCraftSeedsEnabled = nil
     SeedRecipeSelected = nil
     GearRecipeSelected = nil
     RunService:Set3dRenderingEnabled(true)
