@@ -33,6 +33,11 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
 
   Opiumware is able to use all of Milk's features!
 </details>
+<details>
+  <summary>MacSploit</summary>
+
+  MacSploit is able to use all of Milk's features!
+</details>
 
 ## Partially Supported Executors
 <details>
@@ -44,11 +49,6 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   <summary>Solara</summary>
 
   All features will work with Solara, but Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
-</details>
-<details>
-  <summary>MacSploit</summary>
-
-  All features will work with MacSploit, but non-Hyperspeed modes for Auto-Farm may stop working after being enabled for long periods.
 </details>
 
 ## Untested Executors
@@ -83,11 +83,6 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Unknown functionality. If you use SirHurt, please help test compatibility!
 </details>
 <details>
-  <summary>Cosmic</summary>
-
-  Unknown functionality. If you use Cosmic, please help test compatibility!
-</details>
-<details>
   <summary>Isaeva</summary>
 
   Unknown functionality. If you use Isaeva, please help test compatibility!
@@ -98,7 +93,22 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Unknown functionality. If you use Volcano, please help test compatibility!
 </details>
 <details>
-  <summary>bunni.fun</summary>
+  <summary>Volcano</summary>
 
-  Unknown functionality. If you use bunni.fun, please help test compatibility!
+  Unknown functionality. If you use Volcano, please help test compatibility!
+</details>
+<details>
+  <summary>Vega X</summary>
+
+  Unknown functionality. If you use Vega X, please help test compatibility!
+</details>
+<details>
+  <summary>Codex</summary>
+
+  Unknown functionality. If you use Codex, please help test compatibility!
+</details>
+<details>
+  <summary>Cryptic</summary>
+
+  Unknown functionality. If you use Cryptic, please help test compatibility!
 </details>
