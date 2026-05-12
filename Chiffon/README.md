@@ -10,11 +10,13 @@ This is kept open-source for educational purposes and utility; it is others are 
 
   This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic.
 
+  It also is possible to set pet loadout slot numbers if the user has pets that assist with any crafting stages. The script will automatically switch to these loadouts during the process.
+
   The cycle involves setting the recipe, submitting the necessary items, starting crafting, then waiting until crafting is finished before claiming the item.
 
   If the player does not have crafting ingredients available, the feature will restart and continue trying until the recipe can be crafted.
 
-  This module will not work on Solara or Xeno, as it uses `require()` to access a function that submits items for crafting.
+  This module will not work on some executors, as it uses `require()` to access a function that submits items for crafting. If you are running one of the unsupported executors, a notification will appear when the feature is toggled, and crafting will not start.
   ### Loadstring
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Craft.lua"))()
