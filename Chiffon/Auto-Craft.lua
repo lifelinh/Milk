@@ -37,13 +37,13 @@ Window:CreateHomeTab({
     SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware", "Madium"}, 
     UnsupportedExecutors = {"Xeno", "Solara"},
     DiscordInvite = "Dt79RuG4N3",
-    Backdrop = "111065788714232", 
+    Backdrop = "111065788714232",
     IconStyle = 1,
     Changelog = {
         {
             Title = "Module 1 'Auto-Craft'",
-            Date = "12 May 2026",
-            Description = "Updated to reflect main script",
+            Date = "29 Apr. 2026",
+            Description = "Open source and usable Auto-Craft!",
         }
     }
 })
@@ -74,15 +74,15 @@ local GameSettings = Settings:CreateGroupbox({
 	Column = 1,
 }, "Game Settings")
 
-local AutoCraftGearEnabled = false
-local AutoCraftSeedsEnabled = false
+local AutoCraftGearEnabled
+local AutoCraftSeedsEnabled
 local GearRecipeSelected = {}
 local SeedRecipeSelected = {}
 local OrangutanSlot
 local ForgerHamsterSlot
 local PachySlot
-local IsCraftingGear = false
-local IsCraftingSeeds = false
+local IsCraftingGear
+local IsCraftingSeeds
 
 local ActivePetUI = PlayerGui:FindFirstChild("ActivePetUI")
 local ActivePetFrame = ActivePetUI:FindFirstChild("Frame")
@@ -196,7 +196,7 @@ local function AutoCraftGearLoop()
 			task.wait(1)
 		end
     end
-	IsCraftingGear = false
+	IsCraftingGear = nil
 end
 
 local function AutoCraftSeedsLoop()
@@ -276,7 +276,7 @@ local function AutoCraftSeedsLoop()
 			task.wait(1)
 		end
     end
-	IsCraftingSeeds = false
+	IsCraftingSeeds = nil
 end
 
 LocalPlayer.Idled:Connect(function()
@@ -397,7 +397,7 @@ local PachySlotInput = CraftGroupbox:CreateInput({
     end,
 }, "Pachy Slot")
 
-GameSettings:CreateToggle({
+local DeRender = GameSettings:CreateToggle({
 	Name = "Disable 3D Rendering",
 	CurrentValue = false,
 	Style = 2,
@@ -406,7 +406,7 @@ GameSettings:CreateToggle({
 	end,
 }, "Unrender World")
 
-GameSettings:CreateButton({
+local NoGui = GameSettings:CreateButton({
 	Name = "Hide GUIs (must rejoin to undo)",
 	Icon = NebulaIcons:GetIcon("eye-off", "Lucide"),
 	Callback = function()
@@ -422,7 +422,7 @@ GameSettings:CreateButton({
 	end,
 }, "Hide GUIs")
 
-GameSettings:CreateButton({
+local Rejoin = GameSettings:CreateButton({
 	Name = "Rejoin Game",
 	Icon = NebulaIcons:GetIcon("wifi-sync", "Lucide"),
 	Callback = function()
@@ -431,15 +431,15 @@ GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-    AutoCraftGearEnabled = false
-    AutoCraftSeedsEnabled = false
+    AutoCraftGearEnabled = nil
+    AutoCraftSeedsEnabled = nil
     GearRecipeSelected = {}
     SeedRecipeSelected = {}
     OrangutanSlot = nil
     ForgerHamsterSlot = nil
     PachySlot = nil
-    IsCraftingGear = false
-    IsCraftingSeeds = false
+    IsCraftingGear = nil
+    IsCraftingSeeds = nil
     RunService:Set3dRenderingEnabled(true)
 end)
 
