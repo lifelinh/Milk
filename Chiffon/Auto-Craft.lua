@@ -308,7 +308,7 @@ local AutoCraftGear = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Gear Toggle")
 
 local GearRecipes = AutoCraftGear:AddDropdown({
-    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Anti Bee Egg", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Silver Piggy", "Golden Piggy", "Chimera Stone"},
+    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Anti Bee Egg", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone"},
     CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no gear recipe selected",
