@@ -8,7 +8,7 @@ This is kept open-source for educational purposes and utility; it is others are 
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
 
-  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic.
+  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic. Users are still able to craft the Anti Bee Egg and the Pack Bee with the feature, despite them being removed after the Bizzy Bees 2026 update.
 
   It also is possible to set pet loadout slot numbers if the user has pets that assist with any crafting stages. The script will automatically switch to these loadouts during the process.
 
@@ -22,6 +22,22 @@ This is kept open-source for educational purposes and utility; it is others are 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Craft.lua"))()
 ```
 </details>
+<details>
+  <summary>Module 2 "Auto-Incubate"</summary>
+
+  This module contains one toggle, which automatically uses the Incubator introduced in the Bizzy Bees 2026 event.
+
+  The feature will automatically submit one seed to the incubator, pay the required Honey Coins, collect the seed once the incubation period is over, then repeats. It will continue repeating until you are no longer holding a seed.
+
+  The user must hold a seed to select it as the seed that will be automatically incubated.
+
+  This module will work on all executors.
+  ### Loadstring
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Incubate.lua"))()
+```
+</details>
+
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
 > If you need any help, join the Discord server: https://discord.gg/Dt79RuG4N3
