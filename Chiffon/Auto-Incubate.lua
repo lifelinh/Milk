@@ -74,22 +74,27 @@ local GameSettings = Settings:CreateGroupbox({
 	Column = 1,
 }, "Game Settings")
 
-local AutoIncubateEnabled
-local IsIncubating
+local AutoHoneyIncubateEnabled
+local IsIncubatingHoney
+local AutoJellyIncubateEnabled
+local IsIncubatingJelly
 
 local Interaction = workspace:WaitForChild("Interaction")
-local UpdateItems = Interaction:WaitForChild("UpdateItems")
-local BeeEvent = UpdateItems:WaitForChild("BeeEvent")
+local BeeEvent = Interaction:WaitForChild("BeeEvent")
 local Incubator = BeeEvent:WaitForChild("Incubator")
 local Machine = Incubator:WaitForChild("Machine")
 local InserPart = Machine:WaitForChild("InserPart")
+local UpdateItems = Interaction:WaitForChild("UpdateItems")
+local RoyalJellyMachine = UpdateItems:WaitForChild("Royal Jelly Machine")
+local JellyCraftingMachine = RoyalJellyMachine:WaitForChild("JellyCraftingMachine")
+local PromptHolder = JellyCraftingMachine:FindFirstChild("PromptHolder")
 
-local function IncubateLoop()
-	if IsIncubating then
+local function IncubateHoneyLoop()
+	if IsIncubatingHoney then
 		return
 	end
-	IsIncubating = true
-	while AutoIncubateEnabled do
+	IsIncubatingHoney = true
+	while AutoHoneyIncubateEnabled do
 		local InsertPrompt = InserPart:FindFirstChild("InsertPrompt")
 		if InsertPrompt.ActionText == "Remove Seed" then
 			task.wait(0.2)
@@ -117,7 +122,48 @@ local function IncubateLoop()
 			task.wait(0.2)
 		end
 	end
-	IsIncubating = nil
+	IsIncubatingHoney = nil
+end
+
+local function IncubateJellyLoop()
+	if IsIncubatingJelly then
+		return
+	end
+	IsIncubatingJelly = true
+	local InsertPrompt
+	for _, Prompt in ipairs(PromptHolder:GetChildren()) do
+		if Prompt.ActionText == "Submit" or Prompt.ActionText == "Skip" or Prompt.ActionText == "Claim" then
+			InsertPrompt = Prompt
+		end
+	end
+	while AutoJellyIncubateEnabled do
+		if not InsertPrompt.Enabled then
+			task.wait(0.2)
+			GameEvents.JellyCrafting:FindFirstChild("Remove"):FireServer()
+		end
+		if InsertPrompt.ActionText == "Skip" then
+			repeat
+				task.wait(2)
+			until InsertPrompt.ActionText == "Claim"
+		end
+		if InsertPrompt.ActionText == "Claim" then
+			task.wait(0.2)
+			GameEvents.JellyCrafting.Claim:FireServer()
+		end
+		if InsertPrompt.ActionText == "Submit" then
+			local Character = LocalPlayer.Character
+			local Tool = Character:FindFirstChildOfClass("Tool")
+			if not Tool or not Tool:FindFirstChild("Seed Local Script") then
+				task.wait(2)
+				continue
+			end
+			GameEvents.JellyCrafting.Submit:FireServer()
+			task.wait(0.2)
+			GameEvents.JellyCrafting.Start:FireServer()
+			task.wait(0.2)
+		end
+	end
+	IsIncubatingJelly = false
 end
 
 LocalPlayer.Idled:Connect(function()
@@ -136,17 +182,29 @@ local function OnErrorMessageChanged(ErrorMessage)
 end
 GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
 
-local AutoIncubateToggle = FarmGroupbox:CreateToggle({
-    Name = "Auto-Incubate Held Seed",
+local AutoHoneyIncubateToggle = FarmGroupbox:CreateToggle({
+    Name = "Auto-Honey Incubate Held Seed",
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoIncubateEnabled = Value
+        AutoHoneyIncubateEnabled = Value
         if Value then
-            task.spawn(IncubateLoop)
+            task.spawn(IncubateHoneyLoop)
         end
     end,
-}, "Auto Incubator")
+}, "Auto Honey Incubator")
+
+local AutoJellyIncubateToggle = FarmGroupbox:CreateToggle({
+    Name = "Auto-Jelly Incubate Held Seed",
+    CurrentValue = false,
+    Style = 2,
+    Callback = function(Value)
+        AutoJellyIncubateEnabled = Value
+        if Value then
+            task.spawn(IncubateJellyLoop)
+        end
+    end,
+}, "Auto Jelly Incubator")
 
 local DeRender = GameSettings:CreateToggle({
 	Name = "Disable 3D Rendering",
@@ -182,8 +240,10 @@ local Rejoin = GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-    AutoIncubateEnabled = nil
-    IsIncubating = nil
+    AutoHoneyIncubateEnabled = nil
+    IsIncubatingHoney = nil
+	AutoJellyIncubateEnabled = nil
+	IsIncubatingJelly = nil
     RunService:Set3dRenderingEnabled(true)
 end)
 
