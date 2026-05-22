@@ -113,9 +113,13 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Unknown functionality. If you use Cryptic, please help test compatibility!
 </details>
 
+## Mini Versions
+
+See [`/modules`](./modules) for open-source, lightweight, standalone scripts that contain fewer features.
+
 ## Privacy Policy
 
-Last updated: 21 May 2026
+Last updated: 22 May 2026
 
 Milk collects limited analytics data in order to monitor usage, improve stability, and better understand how the software is used. This script is a personal, non-commercial project and is not operated as a registered business.
 
@@ -130,7 +134,7 @@ The following information may be collected when the script is used:
 * Game identifiers
 * Aggregate usage statistics and execution counts
 
-Usernames are hashed before storage and are not kept in plaintext.
+Usernames are hashed before storage and are not kept in plaintext. Scripts located in [`/modules`](./modules) do not collect or transmit any data.
 
 ### Information Not Collected
 

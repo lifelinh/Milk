@@ -19,14 +19,14 @@ local PlayerGui = LocalPlayer.PlayerGui
 Starlight:SetTheme("Crimson")
 
 local Window = Starlight:CreateWindow({
-    Name = "Chiffon",
-    Subtitle = "discord.gg/Dt79RuG4N3",
-	Icon = "86988535813561",
+    Name = "Milk",
+    Subtitle = "discord.gg/9NyRdmfTgp",
+	Icon = "105193356396598",
 	LoadingEnabled = true,
     LoadingSettings = {
-        Title = "Chiffon",
+        Title = "Milk",
         Subtitle = "Welcome!",
-		Logo = "134709478207975"
+		Logo = "82490480792476"
     },
     FileSettings = {
         ConfigFolder = "C2Cfgs"
@@ -36,8 +36,8 @@ local Window = Starlight:CreateWindow({
 Window:CreateHomeTab({
     SupportedExecutors = {"Opiumware", "MacSploit", "Delta", "Xeno", "Solara", "Seliware", "Madium"},
     UnsupportedExecutors = {},
-    DiscordInvite = "Dt79RuG4N3",
-    Backdrop = "111065788714232", 
+    DiscordInvite = "9NyRdmfTgp",
+    Backdrop = "81840397943482", 
     IconStyle = 1,
     Changelog = {
         {

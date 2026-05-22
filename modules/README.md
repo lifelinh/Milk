@@ -1,9 +1,11 @@
-# Chiffon
-The Chiffon folder is a collection of open-source "mini-scripts" containing a subset of Milk's features.
+# Modules
+This folder is a collection of open-source "mini-scripts" containing a subset of Milk's features.
 
-When Grow a Garden updates, some of the features designed for the previous event may be removed, due to the event ending. Code for these features may also be uploaded to the Chiffon module collection. Features that were planned to be implemented, but scrapped, may also be added as well.
+When Grow a Garden updates, some of the features designed for the previous event may be removed, due to the event ending. Code for these features may also be uploaded to this collection. 
 
-This is kept open-source for educational purposes and utility; it is others are welcome to use the available material in any way to improve their own scripts or programming skills!
+Features that were planned to be implemented, but scrapped, may also be added as well.
+
+This is kept open-source for educational purposes; others are welcome to use the available material in any way to improve their own scripts or programming skills!
 ## Collection
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
@@ -19,7 +21,7 @@ This is kept open-source for educational purposes and utility; it is others are 
   This module will not work on some executors, as it uses `require()` to access a function that submits items for crafting. If you are running one of the unsupported executors, a notification will appear when the feature is toggled, and crafting will not start.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Craft.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Craft.lua"))()
 ```
 </details>
 <details>
@@ -34,12 +36,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
   This module will work on all executors.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/Chiffon/Auto-Incubate.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Incubate.lua"))()
 ```
 </details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
 > If you need any help, join the Discord server: https://discord.gg/9NyRdmfTgp
+
+[Back to main README](../README.md)
+
 ## Credits
 The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.xyz/starlight), which is developed by [Nebula Softworks](https://github.com/Nebula-Softworks).

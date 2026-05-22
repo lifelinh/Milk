@@ -19,14 +19,14 @@ local PlayerGui = LocalPlayer.PlayerGui
 Starlight:SetTheme("Crimson")
 
 local Window = Starlight:CreateWindow({
-    Name = "Chiffon",
-    Subtitle = "discord.gg/Dt79RuG4N3",
-	Icon = "86988535813561",
+    Name = "Milk",
+    Subtitle = "discord.gg/9NyRdmfTgp",
+	Icon = "105193356396598",
 	LoadingEnabled = true,
     LoadingSettings = {
-        Title = "Chiffon",
+        Title = "Milk",
         Subtitle = "Welcome!",
-		Logo = "134709478207975"
+		Logo = "82490480792476"
     },
     FileSettings = {
         ConfigFolder = "C1Cfgs"
@@ -36,8 +36,8 @@ local Window = Starlight:CreateWindow({
 Window:CreateHomeTab({
     SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware", "Madium"}, 
     UnsupportedExecutors = {"Xeno", "Solara"},
-    DiscordInvite = "Dt79RuG4N3",
-    Backdrop = "111065788714232",
+    DiscordInvite = "9NyRdmfTgp",
+    Backdrop = "81840397943482",
     IconStyle = 1,
     Changelog = {
         {
@@ -308,8 +308,8 @@ local AutoCraftGear = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Gear Toggle")
 
 local GearRecipes = AutoCraftGear:AddDropdown({
-    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Anti Bee Egg", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone"},
-    CurrentOptions = {},
+    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Anti Bee Egg", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone", "Black Spotty Egg", "Tropical Mist Sprinkler", "Berry Blusher Sprinkler", "Spice Spritzer Sprinkler", "Flower Froster Sprinkler", "Stalk Sprout Sprinkler", "Sweet Soaker Sprinkler", "Mutation Spray Pollinated", "Honey Crafters Crate", "Mutation Spray Glimmering", "Mutation Spray Chilled", "Mutation Spray Shocked", "Mutation Spray Choc"},
+	CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no gear recipe selected",
     Callback = function(Options)
@@ -335,7 +335,7 @@ local AutoCraftSeeds = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Seeds Toggle")
 
 local SeedRecipes = AutoCraftSeeds:AddDropdown({
-    Options = {"Egg Melon", "Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow"},
+	Options = {"Egg Melon", "Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow", "Grand Volcania", "Peace Lily", "Aloe Vera", "Guanabana", "Crafters Seed Pack", "Manuka Flower", "Dandelion", "Lumira", "Honeysuckle", "Bee Balm", "Nectar Thorn", "Suncoil", "Twisted Tangle", "Veinpetal", "Horsetail", "Lingonberry", "Amber Spine"},
     CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no seed recipe selected",
