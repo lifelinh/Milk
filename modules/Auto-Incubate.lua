@@ -16,7 +16,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer.PlayerGui
 
-Starlight:SetTheme("Crimson")
+Starlight:SetTheme("Hollywood Fluent")
 
 local Window = Starlight:CreateWindow({
     Name = "Milk",
@@ -37,7 +37,7 @@ Window:CreateHomeTab({
     SupportedExecutors = {"Opiumware", "MacSploit", "Delta", "Xeno", "Solara", "Seliware", "Madium"},
     UnsupportedExecutors = {},
     DiscordInvite = "9NyRdmfTgp",
-    Backdrop = "81840397943482", 
+    Backdrop = "81840397943482",
     IconStyle = 1,
     Changelog = {
         {

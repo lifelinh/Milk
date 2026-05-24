@@ -16,7 +16,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer.PlayerGui
 
-Starlight:SetTheme("Crimson")
+Starlight:SetTheme("Hollywood Fluent")
 
 local Window = Starlight:CreateWindow({
     Name = "Milk",
