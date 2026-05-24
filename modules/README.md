@@ -21,7 +21,7 @@ This is kept open-source for educational purposes; others are welcome to use the
   This module will not work on some executors, as it uses `require()` to access a function that submits items for crafting. If you are running one of the unsupported executors, a notification will appear when the feature is toggled, and crafting will not start.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Craft.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/refs/heads/main/modules/Auto-Craft.lua"))()
 ```
 </details>
 <details>
@@ -36,7 +36,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
   This module will work on all executors.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Incubate.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/refs/heads/main/modules/Auto-Incubate.lua"))()
 ```
 </details>
 <details>
@@ -51,7 +51,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
   All executors are able to run this script.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Wasp.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/refs/heads/main/modules/Auto-Wasp.lua"))()
 ```
 </details>
 
