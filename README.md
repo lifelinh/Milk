@@ -100,11 +100,6 @@ The UI library is the [Starlight Interface Suite](https://docs.nebulasoftworks.x
   Unknown functionality. If you use Volcano, please help test compatibility!
 </details>
 <details>
-  <summary>Volcano</summary>
-
-  Unknown functionality. If you use Volcano, please help test compatibility!
-</details>
-<details>
   <summary>Vega X</summary>
 
   Unknown functionality. If you use Vega X, please help test compatibility!
