@@ -39,6 +39,21 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/he
 loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Incubate.lua"))()
 ```
 </details>
+<details>
+  <summary>Module 3 "Auto-Wasp"</summary>
+
+  This module contains one toggle that will automatically teleport to wasp eggs, and wait until they are killed by the player's bees, before teleporting to the next wasp egg.
+
+  If there are no wasps active, then it will wait until a wasp egg is added, then teleport to it to fight the wasps.
+
+  Rewards from chests are automatically collected by the game after the chests despawn.
+
+  All executors are able to run this script.
+  ### Loadstring
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/modules/Auto-Wasp.lua"))()
+```
+</details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
