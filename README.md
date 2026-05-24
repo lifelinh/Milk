@@ -1,6 +1,13 @@
 # Milk
 Milk is a script with several automation features for Grow a Garden. It is entirely free and keyless!
 
+<a href="https://github.com/the-amazing-digital-circus/Milk">
+  <img 
+    src="https://github.com/user-attachments/assets/75c3a14b-e163-4ab0-8d7b-5563647992a0" 
+    width="996"
+  />
+</a>
+
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 ## Loadstring
 ```lua
