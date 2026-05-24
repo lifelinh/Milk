@@ -4,7 +4,7 @@ Milk is a script with several automation features for Grow a Garden. It is entir
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 ## Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/lifelinh/Milk/refs/heads/main/126884695634066"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
 ```
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
