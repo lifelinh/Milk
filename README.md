@@ -4,11 +4,28 @@ Milk is a script with several automation features for Grow a Garden. It is entir
 <a href="https://github.com/the-amazing-digital-circus/Milk">
   <img 
     src="https://github.com/user-attachments/assets/75c3a14b-e163-4ab0-8d7b-5563647992a0" 
-    width="996"
+    width="700"
   />
 </a>
 
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
+
+<details>
+  <summary>Media Gallery</summary>
+
+  <img width="700" alt="Home Page" src="https://github.com/user-attachments/assets/ceec43a6-2842-4b9b-bb28-85c03a60e7ef" />
+
+  <img width="700" alt="Automation" src="https://github.com/user-attachments/assets/887f20dc-e0d5-4722-aa3b-290fcc3f7176" />
+
+  <img width="700" alt="Eggs & Pets" src="https://github.com/user-attachments/assets/40c3152e-a377-47fc-af2b-1d4a51414da8" />
+
+  <img width="700" alt="Shops" src="https://github.com/user-attachments/assets/590f7b92-57f1-4464-8b99-620d8332420e" />
+
+  <img width="700" alt="Player" src="https://github.com/user-attachments/assets/98a6e98d-23e0-4070-a578-6ec5046f7c76" />
+
+  <img width="700" alt="Settings" src="https://github.com/user-attachments/assets/c4ce5ed3-5907-4a8d-bcc9-21b3d1694f98" />
+</details>
+
 ## Loadstring
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
