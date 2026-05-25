@@ -37,8 +37,6 @@ Copy the line below, paste it into your executor, and run it. This will load the
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
 ```
 
-You can also copy and paste the code from [`/126884695634066`](./126884695634066), and run that instead.
-
 ## Supported Environments
 
 * Delta
