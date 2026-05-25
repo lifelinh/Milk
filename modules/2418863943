@@ -28,21 +28,21 @@ local Window = Starlight:CreateWindow({
 		Logo = "82490480792476"
     },
     FileSettings = {
-        ConfigFolder = "C4Cfgs"
+        ConfigFolder = "C5Cfgs"
     }
 })
 
 Window:CreateHomeTab({
-    SupportedExecutors = {"Opiumware", "MacSploit", "Delta", "Xeno", "Solara", "Seliware", "Madium"},
-    UnsupportedExecutors = {},
+    SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware", "Madium"}, 
+    UnsupportedExecutors = {"Xeno", "Solara"},
     DiscordInvite = "9NyRdmfTgp",
     Backdrop = "81840397943482",
     IconStyle = 1,
     Changelog = {
         {
-            Title = "Module 4 'Auto Easter Bunny'",
-            Date = "24 May 2026",
-            Description = "Open source Auto-Find Easter Bunny egg!",
+            Title = "Module 5 'Roanoke'",
+            Date = "25 May 2026",
+            Description = "Auto-Rob for Roanoke!",
         }
     }
 })
@@ -55,11 +55,11 @@ local Auto = TabSection:CreateTab({
     Columns = 1,
 }, "Automation Tab")
 
-local MiscGroupbox = Auto:CreateGroupbox({
-    Name = "Miscellaneous",
-    Icon = NebulaIcons:GetIcon("gem", "Lucide"),
+local FarmGroupbox = Auto:CreateGroupbox({
+    Name = "Money",
+    Icon = NebulaIcons:GetIcon("circle-dollar-sign", "Lucide"),
     Column = 1,
-}, "Misc Groupbox")
+}, "Money Groupbox")
 
 local Settings = TabSection:CreateTab({
     Name = "Settings",
@@ -73,36 +73,62 @@ local GameSettings = Settings:CreateGroupbox({
 	Column = 1,
 }, "Game Settings")
 
-local EasterBunnyLoopRunning
-local AutoEasterBunnyEnabled
-local EasterEggRewardConnection
+local RobberyLoopRunning
+local AutoRobberyEnabled
 
-local function AutoEasterBunnyLoop()
-	if EasterBunnyLoopRunning then
-		return
+local Map = workspace:WaitForChild("Map")
+local Systems = workspace:WaitForChild("Systems")
+local Robberies = Systems:WaitForChild("Robberies")
+
+local function GetRoot(Character)
+	if Character and Character:FindFirstChildOfClass("Humanoid") then
+		return Character:FindFirstChildOfClass("Humanoid").RootPart
+	else
+		return nil
 	end
-	EasterBunnyLoopRunning = true
-	local Character = LocalPlayer.Character
-	for _, Object in ipairs(workspace:GetChildren()) do
-		if not AutoEasterBunnyEnabled then
-			break
-		end
-		if Object.Name == "EasterEggReward" then
-			Character:PivotTo(Object:GetPivot() + Vector3.new(0, 5, 0))
-			task.wait(0.2)
-		end
-	end
-	EasterEggRewardConnection = workspace.ChildAdded:Connect(function(Child)
-		if not AutoEasterBunnyEnabled then
-			EasterBunnyLoopRunning = false
-			EasterEggRewardConnection:Disconnect()
-			EasterEggRewardConnection = nil
-			return
-		end
-		if Child.Name == "EasterEggReward" then
-			Character:PivotTo(Child:GetPivot() + Vector3.new(0, 5, 0))
-		end
-	end)
+end
+
+local function TweenTP(Pivot)
+    local Character = LocalPlayer.Character
+    if Character and GetRoot(Character) then
+        local Tween = TweenService:Create(GetRoot(Character), TweenInfo.new(25, Enum.EasingStyle.Linear), {CFrame = Pivot})
+        Tween:Play()
+        Tween.Completed:Wait()
+    end
+end
+
+local function AutoRobbery()
+    if RobberyLoopRunning then
+        return
+    end
+    RobberyLoopRunning = true
+    while AutoRobberyEnabled do
+        task.wait(2)
+        for _, Part in ipairs(Robberies:GetChildren()) do
+            local ATMPrompt = Part:FindFirstChildOfClass("ProximityPrompt")
+            if ATMPrompt and ATMPrompt.Enabled then
+                TweenTP(Part:GetPivot() + Vector3.new(0, 2.5, 0))
+                fireproximityprompt(ATMPrompt)
+                task.wait(10)
+                local Model
+                for _, Object in ipairs(workspace:GetChildren()) do
+                    if Object.Name == "Model" and Object:FindFirstChild("Cash") then
+                        Model = Object
+                    end
+                end
+                if Model then
+                    for _, Item in ipairs(Model:GetChildren()) do
+                        if Item.Name == "Cash" then
+                            local CashPrompt = Item:FindFirstChildOfClass("ProximityPrompt")
+                            task.wait(0.2)
+                            fireproximityprompt(CashPrompt)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    RobberyLoopRunning = false
 end
 
 LocalPlayer.Idled:Connect(function()
@@ -121,17 +147,17 @@ local function OnErrorMessageChanged(ErrorMessage)
 end
 GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
 
-local AutoEasterBunny = MiscGroupbox:CreateToggle({
-    Name = "Auto-Find Easter Bunny Reward",
+local AutoRobbery = FarmGroupbox:CreateToggle({
+    Name = "Auto-Robbery",
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoEasterBunnyEnabled = Value
+        AutoRobberyEnabled = Value
         if Value then
-            task.spawn(AutoEasterBunnyLoop)
+            task.spawn(AutoRobbery)
         end
     end,
-}, "Auto-Find Easter Bunny Toggle")
+}, "Auto-Robbery Toggle")
 
 local DeRender = GameSettings:CreateToggle({
 	Name = "Disable 3D Rendering",
@@ -167,8 +193,8 @@ local Rejoin = GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-    AutoEasterBunnyLoop = nil
-    AutoEasterBunnyEnabled = nil
+    RobberyLoopRunning = nil
+    AutoRobberyEnabled = nil
     RunService:Set3dRenderingEnabled(true)
 end)
 
