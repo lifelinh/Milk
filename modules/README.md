@@ -19,7 +19,8 @@ This is kept open-source for educational purposes; others are welcome to use the
   If the player does not have crafting ingredients available, the feature will restart and continue trying until the recipe can be crafted.
 
   This module will not work on some executors, as it uses `require()` to access a function that submits items for crafting. If you are running one of the unsupported executors, a notification will appear when the feature is toggled, and crafting will not start.
-  ### Loadstring
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Craft.lua"))()
 ```
@@ -34,7 +35,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   The user must hold a seed to select it as the seed that will be automatically incubated.
 
   This module will work on all executors.
-  ### Loadstring
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Incubate.lua"))()
 ```
@@ -49,7 +51,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   Rewards from chests are automatically collected by the game after the chests despawn.
 
   All executors are able to run this script.
-  ### Loadstring
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Wasp.lua"))()
 ```
@@ -64,7 +67,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   Beware that if the egg spawns inside a large plant, the script may be unable to reach it unless an external no-clip feature is enabled.
 
   All executors are able to run this script.
-  ### Loadstring
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Find-Easter-Bunny-Reward.lua"))()
 ```
@@ -75,10 +79,12 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   This module was created upon special request; it is not for Grow a Garden. It contains a feature for a [different game](https://www.roblox.com/games/2418863943/Roanoke-VA-Driving-RP).
 
   It simply teleports to points of interests, and fires a proximity prompt to collect cash.
-  ### Loadstring
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/2418863943.lua"))()
 ```
+
 </details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
