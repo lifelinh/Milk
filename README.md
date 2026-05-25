@@ -26,7 +26,8 @@ Grow a Garden updates weekly, and I am committed to keep up with their pacing! I
   <img width="700" alt="Settings" src="https://github.com/user-attachments/assets/c4ce5ed3-5907-4a8d-bcc9-21b3d1694f98" />
 </details>
 
-## Loadstring
+## Instructions
+Copy the line below, paste it into your executor, and run it. This will load the latest version of Milk.
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
 ```
