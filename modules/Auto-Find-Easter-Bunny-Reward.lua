@@ -6,7 +6,6 @@ if not game:IsLoaded() then
 end
 
 local InsertService = game:GetService("InsertService")
-local TweenService = game:GetService("TweenService")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
 local GuiService = game:GetService("GuiService")
