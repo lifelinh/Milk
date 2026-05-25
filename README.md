@@ -1,4 +1,5 @@
 # Milk
+
 Milk is a script with several automation features for Grow a Garden. It is entirely free and keyless!
 
 <a href="https://github.com/the-amazing-digital-circus/Milk">
@@ -11,6 +12,7 @@ Milk is a script with several automation features for Grow a Garden. It is entir
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 
 <details>
+  
   <summary>Media Gallery</summary>
 
   <img width="700" alt="Home Page" src="https://github.com/user-attachments/assets/ceec43a6-2842-4b9b-bb28-85c03a60e7ef" />
@@ -24,15 +26,21 @@ Grow a Garden updates weekly, and I am committed to keep up with their pacing! I
   <img width="700" alt="Player" src="https://github.com/user-attachments/assets/98a6e98d-23e0-4070-a578-6ec5046f7c76" />
 
   <img width="700" alt="Settings" src="https://github.com/user-attachments/assets/c4ce5ed3-5907-4a8d-bcc9-21b3d1694f98" />
+  
 </details>
 
 ## Instructions
+
 Copy the line below, paste it into your executor, and run it. This will load the latest version of Milk.
+
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
 ```
 
+You can also copy and paste the code from [`/126884695634066`](./126884695634066), and run that instead.
+
 ## Supported Environments
+
 * Delta
 * Madium
 * Seliware
@@ -40,18 +48,24 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 * MacSploit
 
 ## Partially Supported Environments
+
 <details>
+  
   <summary>Xeno</summary>
 
   Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
+  
 </details>
+
 <details>
   <summary>Solara</summary>
 
   Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
+  
 </details>
 
 ## Untested Environments
+
 * Volt
 * Velocity
 * Potassium
@@ -67,6 +81,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 ## Features
 
 <details>
+  
   <summary>Automation</summary>
 
   * __Auto-Farm:__ Choose between different modes for different goals; automatically collects and sells plants based on what you need to do. There are extra options for setting pet loadout slots to automatically do the Magpie method.
