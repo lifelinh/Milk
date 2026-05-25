@@ -12,7 +12,6 @@ Milk is a script with several automation features for Grow a Garden. It is entir
 Grow a Garden updates weekly, and I am committed to keep up with their pacing! I will do my best to keep this script valid for every event or update they release.
 
 <details>
-  
   <summary>Media Gallery</summary>
 
   <img width="700" alt="Home Page" src="https://github.com/user-attachments/assets/ceec43a6-2842-4b9b-bb28-85c03a60e7ef" />
@@ -48,18 +47,16 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 ## Partially Supported Environments
 
 <details>
-  
   <summary>Xeno</summary>
 
   Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
-  
+  Auto-Craft is not supported, but can still set the recipe for you.
 </details>
 
 <details>
   <summary>Solara</summary>
 
-  Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
-  
+  Auto-Farm will run at a reduced speed if not using the Hyperspeed mode. Auto-Craft is not supported, but can still set the recipe for you.
 </details>
 
 ## Untested Environments
@@ -79,7 +76,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 ## Features
 
 <details>
-  
   <summary>Automation</summary>
 
   * __Auto-Farm:__ Choose between different modes for different goals; automatically collects and sells plants based on what you need to do. There are extra options for setting pet loadout slots to automatically do the Magpie method.
