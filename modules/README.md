@@ -77,7 +77,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   It simply teleports to points of interests, and fires a proximity prompt to collect cash.
   ### Loadstring
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Find-Easter-Bunny-Reward.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/2418863943.lua"))()
 ```
 </details>
 
