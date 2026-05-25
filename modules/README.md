@@ -54,6 +54,21 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Wasp.lua"))()
 ```
 </details>
+<details>
+  <summary>Module 4 "Auto-Find Easter Bunny Reward"</summary>
+
+  This module contains one toggle that will automatically teleport to eggs that are created by the Easter Bunny pet. This will collect it for rewards.
+
+  If there are no eggs, then it will wait until the Easter Bunny performs its ability, and teleport to the egg upon creation.
+
+  Beware that if the egg spawns inside a large plant, the script may be unable to reach it unless an external no-clip feature is enabled.
+
+  All executors are able to run this script.
+  ### Loadstring
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Find-Easter-Bunny-Reward.lua"))()
+```
+</details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
