@@ -108,6 +108,7 @@ local function AutoRobbery()
             local ATMPrompt = Part:FindFirstChildOfClass("ProximityPrompt")
             if ATMPrompt and ATMPrompt.Enabled then
                 TweenTP(Part:GetPivot() + Vector3.new(0, 5, 0))
+                task.wait(5)
                 fireproximityprompt(ATMPrompt)
                 task.wait(10)
                 local Model
@@ -120,7 +121,7 @@ local function AutoRobbery()
                     for _, Item in ipairs(Model:GetChildren()) do
                         if Item.Name == "Cash" then
                             local CashPrompt = Item:FindFirstChildOfClass("ProximityPrompt")
-                            task.wait(0.2)
+                            task.wait(0.5)
                             fireproximityprompt(CashPrompt)
                         end
                     end

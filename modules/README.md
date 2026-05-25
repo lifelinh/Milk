@@ -69,6 +69,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Find-Easter-Bunny-Reward.lua"))()
 ```
 </details>
+<details>
+  <summary>Module 5 "Auto-Robbery"</summary>
+
+  This module was created upon special request; it is not for Grow a Garden. It contains a feature for a [different game](https://www.roblox.com/games/2418863943/Roanoke-VA-Driving-RP).
+
+  It simply teleports to points of interests, and fires a proximity prompt to collect cash.
+  ### Loadstring
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Auto-Find-Easter-Bunny-Reward.lua"))()
+```
+</details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
