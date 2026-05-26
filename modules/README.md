@@ -93,7 +93,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 
   To use it, select or search for an item, then press "Buy." It will first attempt to purchase with tokens; if tokens are unavailable, then Robux will be used instead.
 
+  There also is the option to send an item as a gift to another player in the server; only items that have a giftable counterpart can be selected. Choose the non-gift version from the product list, and select the player. Then, press the `Send Gift` button. 
+
   Purchasing with tokens is unavailable for executors that are unable to use `require()`. This includes Xeno and Solara.
+
+  Also, many executors disable using Robux to purchase items, which can cause errors if tokens are not available. Please reach out to your executor developers to find out how to re-enable Robux purchasing.
+  
+  This module uses the [Maclib UI library](https://brady-xyz.gitbook.io/maclib-ui-library), as the Starlight UI does not support searchable dropdown menus, which absolutely was necessary, given that over 1.2k products exist.
   ### Instructions
   Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
 ```lua
