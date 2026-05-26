@@ -86,6 +86,21 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 ```
 
 </details>
+<details>
+  <summary>Module 6 "Prompt Purchase"</summary>
+
+  This module contains a searchable dropdown menu that contains all products that are purchasable with Robux. It includes items from previous events that may have been removed, but are still purchasable.
+
+  To use it, select or search for an item, then press "Buy." It will first attempt to purchase with tokens; if tokens are unavailable, then Robux will be used instead.
+
+  Purchasing with tokens is unavailable for executors that are unable to use `require()`. This includes Xeno and Solara.
+  ### Instructions
+  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/Prompt-Purchase.lua"))()
+```
+
+</details>
 
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
