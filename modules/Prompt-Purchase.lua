@@ -150,17 +150,28 @@ ShopSection:Dropdown({
 	end,
 }, "Product Dropdown")
 
+ShopSection:Button({
+    Name = "Send Gift",
+    Callback = function()
+        GameEvents.Gift.SendGiftTo:FireServer({targetUserId = SelectedPlayer, productId = getgenv().Products[SelectedItem]})
+    end
+})
+
 ShopSection:Dropdown({
-	Name = "Gift Player",
+	Name = "Gift Target",
 	Search = false,
 	Multi = false,
 	Required = false,
 	Options = Users,
 	Callback = function(value)
-        local TargetId = UsernameIdPairs[value]
-		GameEvents.Gift.SendGiftTo:FireServer({targetUserId = TargetId})
+        SelectedPlayer = UsernameIdPairs[value]
 	end,
 }, "Gifting Dropdown")
+
+ShopSection:Paragraph({
+  Header = "Gift Instructions",
+  Body = "Choose the non-gift version of a product that can be gifted. Select the player to send the gift to, then press the Send Gift button."
+})
 
 SettingsSection:Toggle({
 	Name = "Disable 3D Rendering",
