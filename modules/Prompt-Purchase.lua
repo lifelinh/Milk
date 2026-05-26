@@ -123,6 +123,7 @@ ShopSection:Button({
             return
         end
         if pass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
+            print(ProductId)
             MarketController.PromptPurchase(LocalPlayer, ProductId)
         end
     end,
