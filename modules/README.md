@@ -97,7 +97,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 
   Purchasing with tokens is unavailable for executors that are unable to use `require()`. This includes Xeno and Solara.
 
-  Also, many executors disable using Robux to purchase items, which can cause errors if tokens are not available. Please reach out to your executor developers to find out how to re-enable Robux purchasing.
+  Also, many executors disable using Robux to purchase items, which can cause errors if tokens are not available. Please reach out to your executor developers to find out how to re-enable Robux purchasing. The source code is publicly viewable, so there is no need for concern about safety.
   
   This module uses the [Maclib UI library](https://brady-xyz.gitbook.io/maclib-ui-library), as the Starlight UI does not support searchable dropdown menus, which absolutely was necessary, given that over 1.2k products exist.
   ### Instructions
