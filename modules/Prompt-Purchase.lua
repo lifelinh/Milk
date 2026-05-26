@@ -122,6 +122,8 @@ ShopSection:Button({
             })
             return
         end
+        print(pass)
+        print(MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId))
         if pass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             print(ProductId)
             MarketController.PromptPurchase(LocalPlayer, ProductId)
