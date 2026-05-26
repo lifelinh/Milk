@@ -36,42 +36,40 @@ Copy the line below, paste it into your executor, and run it. This will load the
 loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066"))()
 ```
 
-## Supported Environments
-
-* Delta
-* Madium
-* Seliware
-* Opiumware
-* MacSploit
-
-## Partially Supported Environments
+## Compatibility
 
 <details>
-  <summary>Xeno</summary>
+  <summary>Supported Environments</summary>
 
-  Auto-Farm will run at a reduced speed if not using the Hyperspeed mode.
-  Auto-Craft is not supported, but can still set the recipe for you.
+  * Delta
+  * Madium
+  * Seliware
+  * Opiumware
+  * MacSploit
 </details>
 
 <details>
-  <summary>Solara</summary>
+  <summary>Partially Supported Environments</summary>
 
-  Auto-Farm will run at a reduced speed if not using the Hyperspeed mode. Auto-Craft is not supported, but can still set the recipe for you.
+  * Xeno (no Auto-Craft)
+  * Solara (no Auto-Craft)
 </details>
 
-## Untested Environments
-
-* Volt
-* Velocity
-* Potassium
-* Wave
-* SynapseZ
-* SirHurt
-* Isaeva
-* Volcano
-* VegaX
-* Codex
-* Cryptic
+<details>
+  <summary>Untested Environments</summary>
+  
+  * Volt
+  * Velocity
+  * Potassium
+  * Wave
+  * SynapseZ
+  * SirHurt
+  * Isaeva
+  * Volcano
+  * VegaX
+  * Codex
+  * Cryptic
+</details>
 
 ## Features
 
@@ -126,13 +124,11 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   - __Execute on Join:__ If using the Rejoin Game button, when automatically rejoined by the client, or if teleporting to other places within the game (from or to trade world), the client will attempt to load the script after connecting, if it was previously active.
 </details>
 
+See [`/modules`](./modules) for open-source, lightweight, standalone scripts that contain fewer features.
+
 <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
 > If you need any help, join the Discord server: https://discord.gg/9NyRdmfTgp
-
-## Mini Versions
-
-See [`/modules`](./modules) for open-source, lightweight, standalone scripts that contain fewer features.
 
 ## Credits
 
