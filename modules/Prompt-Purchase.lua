@@ -5,6 +5,7 @@ if not game:IsLoaded() then
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameEvents = ReplicatedStorage.GameEvents
 local MarketplaceService = game:GetService("MarketplaceService")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
@@ -17,6 +18,7 @@ local PlayerGui = LocalPlayer.PlayerGui
 local Window = MacLib:Window({
     Title = "Milk",
     Subtitle = "discord.gg/9NyRdmfTgp",
+    Size = UDim2.fromOffset(690, 400),
     DragStyle = 2,
     DisabledWindowControls = {},
     ShowUserInfo = true,
@@ -39,6 +41,9 @@ local SettingsSection = Tab:Section({
 })
 
 local SelectedItem
+local SelectedPlayer
+local Users = {}
+local UsernameIdPairs = {}
 local pass, MarketController = pcall(function()
 	return require(ReplicatedStorage.Modules.MarketController)
 end)
@@ -46,8 +51,8 @@ end)
 if not pass then
     Window:Notify({
         Title = "Incompatible Executor",
-        Description = "Token purchasing is not supported, items will be bought with Robux instead",
-        Lifetime = 5
+        Description = "Token purchasing is not supported. Items will be bought with Robux instead.",
+        Lifetime = 10
     })
 end
 
@@ -76,6 +81,33 @@ if not getgenv().Products or not getgenv().ProductOptions then
     getgenv().ProductOptions = ProductOptions
 end
 
+local function RefreshUserTable()
+	table.clear(Users)
+    table.clear(UsernameIdPairs)
+	for _, Player in ipairs(Players:GetPlayers()) do
+		table.insert(Users, Player.Name)
+        UsernameIdPairs[Player.Name] = Player.UserId
+	end
+end
+RefreshUserTable()
+
+local GiftDropdown
+local function RefreshUserTable()
+	table.clear(Users)
+	table.clear(UsernameIdPairs)
+	for _, Player in ipairs(Players:GetPlayers()) do
+		table.insert(Users, Player.Name)
+		UsernameIdPairs[Player.Name] = Player.UserId
+	end
+	if GiftDropdown then
+		GiftDropdown:ClearOptions()
+		GiftDropdown:InsertOptions(Users)
+	end
+end
+
+Players.PlayerAdded:Connect(RefreshUserTable)
+Players.PlayerRemoving:Connect(RefreshUserTable)
+
 LocalPlayer.Idled:Connect(function()
 	task.wait(5)
 	VirtualUser:Button2Down(Vector2.zero, workspace.CurrentCamera.CFrame)
@@ -99,13 +131,22 @@ ShopSection:Button({
         if not SelectedItem then
             Window:Notify({
                 Title = "No Item Selected",
-                Description = "Please choose a product from the searchable dropdown menu.",
+                Description = "Please choose a product from the dropdown menu.",
                 Lifetime = 5
             })
             return
         end
         if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
-            MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            local robuxpassed, failure = pcall(function()
+                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            end)
+            if not robuxpassed then
+                Window:Notify({
+                    Title = "Error",
+                    Description = "The item cannot be bought with tokens (or you can't afford it), and your executor disabled Robux purchases.",
+                    Lifetime = 10
+                })
+            end
         else
             MarketController.PromptPurchase(LocalPlayer, ProductId)
         end
@@ -122,6 +163,29 @@ ShopSection:Dropdown({
 		SelectedItem = value
 	end,
 }, "Product Dropdown")
+
+ShopSection:Button({
+    Name = "Send Gift",
+    Callback = function()
+        GameEvents.Gift.SendGiftTo:FireServer({targetUserId = SelectedPlayer, productId = getgenv().Products[SelectedItem]})
+    end
+})
+
+GiftDropdown = ShopSection:Dropdown({
+	Name = "Gift Target",
+	Search = false,
+	Multi = false,
+	Required = false,
+	Options = Users,
+	Callback = function(value)
+        SelectedPlayer = UsernameIdPairs[value]
+	end,
+}, "Gifting Dropdown")
+
+ShopSection:Paragraph({
+  Header = "Gift Instructions",
+  Body = "Choose the non-gift version of a product that can be gifted. Select the player to send the gift to, then press the Send Gift button."
+})
 
 SettingsSection:Toggle({
 	Name = "Disable 3D Rendering",
@@ -156,5 +220,6 @@ SettingsSection:Button({
 Tab:Select(Tab)
 Window.onUnloaded(function()
     SelectedItem = nil
+    SelectedPlayer = nil
     RunService:Set3dRenderingEnabled(true)
 end)
