@@ -122,12 +122,10 @@ ShopSection:Button({
             })
             return
         end
-        if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
-            pcall(function()
-                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
-            end)
-        else
+        if pass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             MarketController.PromptPurchase(LocalPlayer, ProductId)
+        else
+            MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
         end
     end,
 })
