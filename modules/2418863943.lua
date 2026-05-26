@@ -115,6 +115,7 @@ local function AutoRobbery()
                 for _, Object in ipairs(workspace:GetChildren()) do
                     if Object.Name == "Model" and Object:FindFirstChild("Cash") then
                         Model = Object
+                        break
                     end
                 end
                 if Model then
