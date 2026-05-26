@@ -17,6 +17,7 @@ local PlayerGui = LocalPlayer.PlayerGui
 local Window = MacLib:Window({
     Title = "Milk",
     Subtitle = "discord.gg/9NyRdmfTgp",
+    Size = UDim2.fromOffset(580, 460),
     DragStyle = 2,
     DisabledWindowControls = {},
     ShowUserInfo = true,
@@ -46,8 +47,8 @@ end)
 if not pass then
     Window:Notify({
         Title = "Incompatible Executor",
-        Description = "Token purchasing is not supported, items will be bought with Robux instead",
-        Lifetime = 5
+        Description = "Token purchasing is not supported. Items will be bought with Robux instead.",
+        Lifetime = 10
     })
 end
 
@@ -99,13 +100,22 @@ ShopSection:Button({
         if not SelectedItem then
             Window:Notify({
                 Title = "No Item Selected",
-                Description = "Please choose a product from the searchable dropdown menu.",
+                Description = "Please choose a product from the dropdown menu.",
                 Lifetime = 5
             })
             return
         end
         if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
-            MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            local robuxpassed, failure = pcall(function()
+                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            end)
+            if not robuxpassed then
+                Window:Notify({
+                    Title = "Error",
+                    Description = "The item cannot be bought with tokens (or you can't afford it), and your executor disabled Robux purchases.",
+                    Lifetime = 10
+                })
+            end
         else
             MarketController.PromptPurchase(LocalPlayer, ProductId)
         end
