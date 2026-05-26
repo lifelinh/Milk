@@ -139,14 +139,9 @@ ShopSection:Button({
         if tokenpass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             print(ProductId)
             MarketController.PromptPurchase(LocalPlayer, ProductId)
-        elseif robuxpass then
-            PromptProductPurchase(LocalPlayer, ProductId)
         else
-            Window:Notify({
-                Title = "Notification",
-                Description = "The item cannot be bought with tokens, and your executor has disabled purchasing with Robux.",
-                Lifetime = 10
-            })
+            PromptProductPurchase(LocalPlayer, ProductId)
+        end
     end,
 })
 
