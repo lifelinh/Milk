@@ -44,14 +44,25 @@ local SelectedItem
 local SelectedPlayer
 local Users = {}
 local UsernameIdPairs = {}
-local pass, MarketController = pcall(function()
+local tokenpass, MarketController = pcall(function()
 	return require(ReplicatedStorage.Modules.MarketController)
 end)
+local robuxpass, PromptProductPurchase = pcall(function()
+    return MarketplaceService:PromptProductPurchase()
+end)
 
-if not pass then
+if not tokenpass then
     Window:Notify({
-        Title = "Incompatible Executor",
-        Description = "Your executor is unable to load the necessary features for this script. All features have been disabled.",
+        Title = "Notification",
+        Description = "Your executor is unable to use tokens. The script will try to use Robux instead.",
+        Lifetime = 10
+    })
+end
+
+if not robuxpass then
+    Window:Notify({
+        Title = "Notification",
+        Description = "Your executor is unable to purchase with Robux, likely due to built-in scam protection that disables purchases.",
         Lifetime = 10
     })
 end
@@ -122,12 +133,20 @@ ShopSection:Button({
             })
             return
         end
-        print(pass)
+        print(tokenpass)
+        print(robuxpass)
         print(MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId))
-        if pass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
+        if tokenpass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             print(ProductId)
             MarketController.PromptPurchase(LocalPlayer, ProductId)
-        end
+        elseif robuxpass then
+            PromptProductPurchase(LocalPlayer, ProductId)
+        else
+            Window:Notify({
+                Title = "Notification",
+                Description = "The item cannot be bought with tokens, and your executor has disabled purchasing with Robux.",
+                Lifetime = 10
+            })
     end,
 })
 
