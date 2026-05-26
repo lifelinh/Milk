@@ -47,22 +47,11 @@ local UsernameIdPairs = {}
 local tokenpass, MarketController = pcall(function()
 	return require(ReplicatedStorage.Modules.MarketController)
 end)
-local robuxpass, PromptProductPurchase = pcall(function()
-    return MarketplaceService:PromptProductPurchase()
-end)
 
 if not tokenpass then
     Window:Notify({
         Title = "Notification",
         Description = "Your executor is unable to use tokens. The script will try to use Robux instead.",
-        Lifetime = 10
-    })
-end
-
-if not robuxpass then
-    Window:Notify({
-        Title = "Notification",
-        Description = "Your executor is unable to purchase with Robux, likely due to built-in scam protection that disables purchases.",
         Lifetime = 10
     })
 end
@@ -134,13 +123,22 @@ ShopSection:Button({
             return
         end
         print(tokenpass)
-        print(robuxpass)
         print(MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId))
         if tokenpass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             print(ProductId)
             MarketController.PromptPurchase(LocalPlayer, ProductId)
         else
-            PromptProductPurchase(LocalPlayer, ProductId)
+            local robuxpass, status = pcall(function()
+                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            end)
+            print(robuxpass)
+            if not robuxpass then
+                Window:Notify({
+                    Title = "Notification",
+                    Description = "Your executor has disabled purchasing items with Robux.",
+                    Lifetime = 10
+                })
+            end
         end
     end,
 })
