@@ -51,8 +51,8 @@ end)
 if not pass then
     Window:Notify({
         Title = "Incompatible Executor",
-        Description = "Token purchasing is not supported, items will be bought with Robux instead",
-        Lifetime = 5
+        Description = "Your executor is unable to load the necessary features for this script. All features have been disabled.",
+        Lifetime = 10
     })
 end
 
@@ -124,8 +124,6 @@ ShopSection:Button({
         end
         if pass and MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
             MarketController.PromptPurchase(LocalPlayer, ProductId)
-        else
-            MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
         end
     end,
 })
