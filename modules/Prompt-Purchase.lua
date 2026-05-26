@@ -5,6 +5,7 @@ if not game:IsLoaded() then
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameEvents = ReplicatedStorage.GameEvents
 local MarketplaceService = game:GetService("MarketplaceService")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
@@ -17,6 +18,7 @@ local PlayerGui = LocalPlayer.PlayerGui
 local Window = MacLib:Window({
     Title = "Milk",
     Subtitle = "discord.gg/9NyRdmfTgp",
+    Size = UDim2.fromOffset(580, 460),
     DragStyle = 2,
     DisabledWindowControls = {},
     ShowUserInfo = true,
@@ -39,6 +41,9 @@ local SettingsSection = Tab:Section({
 })
 
 local SelectedItem
+local SelectedPlayer
+local Users = {}
+local UsernameIdPairs = {}
 local pass, MarketController = pcall(function()
 	return require(ReplicatedStorage.Modules.MarketController)
 end)
@@ -76,6 +81,19 @@ if not getgenv().Products or not getgenv().ProductOptions then
     getgenv().ProductOptions = ProductOptions
 end
 
+local function RefreshUserTable()
+	table.clear(Users)
+    table.clear(UsernameIdPairs)
+	for _, Player in ipairs(Players:GetPlayers()) do
+		table.insert(Users, Player.Name)
+        UsernameIdPairs[Player.Name] = Player.UserId
+	end
+end
+RefreshUserTable()
+
+Players.PlayerAdded:Connect(RefreshUserTable)
+Players.PlayerRemoving:Connect(RefreshUserTable)
+
 LocalPlayer.Idled:Connect(function()
 	task.wait(5)
 	VirtualUser:Button2Down(Vector2.zero, workspace.CurrentCamera.CFrame)
@@ -105,7 +123,9 @@ ShopSection:Button({
             return
         end
         if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
-            MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            pcall(function()
+                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+            end)
         else
             MarketController.PromptPurchase(LocalPlayer, ProductId)
         end
@@ -122,6 +142,18 @@ ShopSection:Dropdown({
 		SelectedItem = value
 	end,
 }, "Product Dropdown")
+
+ShopSection:Dropdown({
+	Name = "Gift Player",
+	Search = false,
+	Multi = false,
+	Required = false,
+	Options = Users,
+	Callback = function(value)
+        local TargetId = UsernameIdPairs[value]
+		GameEvents.Gift.SendGiftTo:FireServer({targetUserId = TargetId, productId = getgenv().Products[SelectedItem]})
+	end,
+}, "Gifting Dropdown")
 
 SettingsSection:Toggle({
 	Name = "Disable 3D Rendering",
