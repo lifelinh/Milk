@@ -64,8 +64,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
   * Wave
   * SynapseZ
   * SirHurt
-  * Isaeva
-  * Volcano
+  * YuB-X
   * VegaX
   * Codex
   * Cryptic
