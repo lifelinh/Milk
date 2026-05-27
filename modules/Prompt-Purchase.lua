@@ -167,12 +167,9 @@ ShopSection:Dropdown({
         if value then
             local ProductInformation = MarketplaceService:GetProductInfoAsync(SelectedItem, Enum.InfoType.Product)
             local TokenStatus, Reason = MarketController.CanPurchaseWithTokens(LocalPlayer, SelectedItem)
-            if Reason then
-                Reason = tostring(Reason)
-            end
+            local ReasonText = typeof(Reason) == "string" and (Reason) or ""
             ItemStatus:UpdateHeader(value)
-            print(ProductInformation.PriceInRobux)
-            ItemStatus:UpdateBody(string.format("Purchasable w/ tokens: %s %s\nRobux price: %s", tostring(TokenStatus), Reason or "", tostring(ProductInformation.PriceInRobux)))
+            ItemStatus:UpdateBody(string.format("Price: %s\nPurchasable w/ tokens: %s %s", tostring(ProductInformation.PriceInRobux), tostring(TokenStatus), ReasonText or ""))
         end
 	end,
 }, "Product Dropdown")
