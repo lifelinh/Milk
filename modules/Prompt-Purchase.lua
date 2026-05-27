@@ -13,12 +13,11 @@ local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer.PlayerGui
 
 local Window = MacLib:Window({
     Title = "Milk",
     Subtitle = "discord.gg/9NyRdmfTgp",
-    Size = UDim2.fromOffset(690, 400),
+    Size = UDim2.fromOffset(800, 400),
     DragStyle = 2,
     DisabledWindowControls = {},
     ShowUserInfo = true,
@@ -34,6 +33,10 @@ local Tab = TabGroup:Tab({
 
 local ShopSection = Tab:Section({
     Side = "Left"
+})
+
+local StatusSection = Tab:Section({
+    Side = "Right"
 })
 
 local SettingsSection = Tab:Section({
@@ -81,21 +84,14 @@ if not getgenv().Products or not getgenv().ProductOptions then
     getgenv().ProductOptions = ProductOptions
 end
 
-local function RefreshUserTable()
-	table.clear(Users)
-    table.clear(UsernameIdPairs)
-	for _, Player in ipairs(Players:GetPlayers()) do
-		table.insert(Users, Player.Name)
-        UsernameIdPairs[Player.Name] = Player.UserId
-	end
-end
-RefreshUserTable()
-
 local GiftDropdown
 local function RefreshUserTable()
 	table.clear(Users)
 	table.clear(UsernameIdPairs)
 	for _, Player in ipairs(Players:GetPlayers()) do
+        if Player == LocalPlayer then
+            continue
+        end
 		table.insert(Users, Player.Name)
 		UsernameIdPairs[Player.Name] = Player.UserId
 	end
@@ -104,6 +100,7 @@ local function RefreshUserTable()
 		GiftDropdown:InsertOptions(Users)
 	end
 end
+RefreshUserTable()
 
 Players.PlayerAdded:Connect(RefreshUserTable)
 Players.PlayerRemoving:Connect(RefreshUserTable)
@@ -127,30 +124,36 @@ GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
 ShopSection:Button({
     Name = "Buy",
     Callback = function()
-        local ProductId = getgenv().Products[SelectedItem]
         if not SelectedItem then
-            Window:Notify({
-                Title = "No Item Selected",
-                Description = "Please choose a product from the dropdown menu.",
-                Lifetime = 5
-            })
             return
         end
-        if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, ProductId) then
+        if not pass or not MarketController.CanPurchaseWithTokens(LocalPlayer, SelectedItem) then
             local robuxpassed, failure = pcall(function()
-                MarketplaceService:PromptProductPurchase(LocalPlayer, ProductId)
+                MarketplaceService:PromptProductPurchase(LocalPlayer, SelectedItem)
             end)
             if not robuxpassed then
                 Window:Notify({
                     Title = "Error",
-                    Description = "The item cannot be bought with tokens (or you can't afford it), and your executor disabled Robux purchases.",
+                    Description = "Robux purchasing is disabled on your executor.",
                     Lifetime = 10
                 })
             end
         else
-            MarketController.PromptPurchase(LocalPlayer, ProductId)
+            MarketController.PromptPurchase(LocalPlayer, SelectedItem)
         end
     end,
+})
+
+ShopSection:Button({
+    Name = "Send Gift",
+    Callback = function()
+        GameEvents.Gift.SendGiftTo:FireServer({targetUserId = SelectedPlayer, productId = SelectedItem})
+    end
+})
+
+local ItemStatus = StatusSection:Paragraph({
+    Header = "",
+    Body = ""
 })
 
 ShopSection:Dropdown({
@@ -160,16 +163,19 @@ ShopSection:Dropdown({
 	Required = false,
 	Options = getgenv().ProductOptions,
 	Callback = function(value)
-		SelectedItem = value
+		SelectedItem = getgenv().Products[value]
+        if value then
+            local ProductInformation = MarketplaceService:GetProductInfoAsync(SelectedItem, Enum.InfoType.Product)
+            local TokenStatus, Reason = MarketController.CanPurchaseWithTokens(LocalPlayer, SelectedItem)
+            if Reason then
+                Reason = tostring(Reason)
+            end
+            ItemStatus:UpdateHeader(value)
+            print(ProductInformation.PriceInRobux)
+            ItemStatus:UpdateBody(string.format("Purchasable w/ tokens: %s %s\nRobux price: %s", tostring(TokenStatus), Reason or "", tostring(ProductInformation.PriceInRobux)))
+        end
 	end,
 }, "Product Dropdown")
-
-ShopSection:Button({
-    Name = "Send Gift",
-    Callback = function()
-        GameEvents.Gift.SendGiftTo:FireServer({targetUserId = SelectedPlayer, productId = getgenv().Products[SelectedItem]})
-    end
-})
 
 GiftDropdown = ShopSection:Dropdown({
 	Name = "Gift Target",
@@ -183,8 +189,8 @@ GiftDropdown = ShopSection:Dropdown({
 }, "Gifting Dropdown")
 
 ShopSection:Paragraph({
-  Header = "Gift Instructions",
-  Body = "Choose the non-gift version of a product that can be gifted. Select the player to send the gift to, then press the Send Gift button."
+    Header = "Gift Instructions",
+    Body = "Choose the non-gift version of a product that can be gifted. Select the player to send the gift to, then press the Send Gift button."
 })
 
 SettingsSection:Toggle({
