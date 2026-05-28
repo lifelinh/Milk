@@ -74,20 +74,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 ```
 </details>
 <details>
-  <summary>Module 5 "Auto-Robbery"</summary>
-
-  This module was created upon special request; it is not for Grow a Garden. It contains a feature for a [different game](https://www.roblox.com/games/2418863943/Roanoke-VA-Driving-RP).
-
-  It simply teleports to points of interests, and fires a proximity prompt to collect cash.
-  ### Instructions
-  Copy the line below, paste it into your executor, and run it. This will load the latest version of the module.
-```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/modules/2418863943.lua"))()
-```
-
-</details>
-<details>
-  <summary>Module 6 "Prompt Purchase"</summary>
+  <summary>Module 5 "Prompt Purchase"</summary>
 
   This module contains a searchable dropdown menu that contains all products that are purchasable with Robux. It includes items from previous events that may have been removed, but are still purchasable.
 
