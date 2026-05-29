@@ -1,8 +1,8 @@
 # Milk
 
-Milk is a script with several automation features for Grow a Garden. It is entirely free and keyless!
+[Milk](https://the-amazing-digital-circus.github.io/smoking-scripts/milk.html) is a script with several automation features for Grow a Garden. It is entirely free and keyless!
 
-<a href="https://github.com/the-amazing-digital-circus/Milk">
+<a href="https://the-amazing-digital-circus.github.io/smoking-scripts/milk.html">
   <img 
     src="https://github.com/user-attachments/assets/75c3a14b-e163-4ab0-8d7b-5563647992a0" 
     width="700"
