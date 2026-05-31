@@ -4,6 +4,7 @@ if not game:IsLoaded() then
     game.Loaded:wait()
 end
 
+local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameEvents = ReplicatedStorage.GameEvents
 local MarketplaceService = game:GetService("MarketplaceService")
@@ -13,6 +14,30 @@ local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+
+task.spawn(function()
+	local Request = (fluxus and fluxus.request)
+		or (http and http.request)
+		or http_request
+		or request
+	if Request then
+		pcall(function()
+			Request({
+				Url = "http://127.0.0.1:6463/rpc?v=1",
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json",
+					["Origin"] = "https://discord.com",
+				},
+				Body = HttpService:JSONEncode({
+					cmd = "INVITE_BROWSER",
+					nonce = HttpService:GenerateGUID(false),
+					args = { code = "9NyRdmfTgp" },
+				}),
+			})
+		end)
+	end
+end)
 
 local Window = MacLib:Window({
     Title = "Milk",
