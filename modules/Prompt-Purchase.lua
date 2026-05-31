@@ -14,12 +14,11 @@ local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-
+local Request = (fluxus and fluxus.request)
+	or (http and http.request)
+	or http_request
+	or request
 task.spawn(function()
-	local Request = (fluxus and fluxus.request)
-		or (http and http.request)
-		or http_request
-		or request
 	if Request then
 		pcall(function()
 			Request({
@@ -242,6 +241,47 @@ SettingsSection:Button({
     Name = "Rejoin Server",
 	Callback = function()
 		TeleportService:Teleport(game.PlaceId, LocalPlayer)
+	end,
+})
+
+SettingsSection:Button({
+    Name = "Discord server",
+	Callback = function()
+		local RequestPass
+		local CopyPass = pcall(function()
+			setclipboard("https://discord.gg/9NyRdmfTgp")
+		end)
+		if Request then
+			RequestPass = pcall(function()
+				Request({
+					Url = "http://127.0.0.1:6463/rpc?v=1",
+					Method = "POST",
+					Headers = {
+						["Content-Type"] = "application/json",
+						["Origin"] = "https://discord.com",
+					},
+					Body = HttpService:JSONEncode({
+						cmd = "INVITE_BROWSER",
+						nonce = HttpService:GenerateGUID(false),
+						args = { code = "9NyRdmfTgp" },
+					}),
+				})
+			end)
+		end
+		if CopyPass then
+			Window:Notify({
+				Title = "Success",
+				Description = "Copied Discord server invite link to clipboard",
+				Lifetime = 5
+			})
+		end
+		if not CopyPass and not RequestPass then
+			Window:Notify({
+				Title = "Error",
+				Description = "Failed to join Discord server and copy link; please manually enter the invite: discord.gg/9NyRdmfTgp",
+				Lifetime = 5
+			})
+		end
 	end,
 })
 
