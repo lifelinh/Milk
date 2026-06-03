@@ -36,6 +36,9 @@ task.spawn(function()
 			})
 		end)
 	end
+	if game.GameId ~= 7436755782 then
+		return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+	end
 end)
 
 local Window = MacLib:Window({

@@ -37,6 +37,12 @@ task.spawn(function()
 			})
 		end)
 	end
+	if game.PlaceId == 129954712878723 then
+		return
+	end
+	if game.GameId ~= 7436755782 then
+		return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+	end
 end)
 
 Starlight:SetTheme("Hollywood Fluent")
