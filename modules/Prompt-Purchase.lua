@@ -6,7 +6,7 @@ local MacLib = loadstring(game:HttpGet("https://github.com/biggaboy212/Maclib/re
 
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local GameEvents = ReplicatedStorage.GameEvents
+local GameEvents = ReplicatedStorage:FindFirstChild("GameEvents")
 local MarketplaceService = game:GetService("MarketplaceService")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
@@ -14,10 +14,19 @@ local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Request = (fluxus and fluxus.request)
-	or (http and http.request)
-	or http_request
-	or request
+
+local function FindFunction(t, f)
+    if type(f) == t then
+        return f
+    end
+    return nil
+end
+
+local Request = FindFunction("function", request or http_request or (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request))
+local getconnections = FindFunction("function", getconnections or get_signal_cons)
+local queuetp = FindFunction("function", queue_on_teleport)
+local TeleportCheck
+
 task.spawn(function()
 	if Request then
 		pcall(function()
@@ -36,8 +45,40 @@ task.spawn(function()
 			})
 		end)
 	end
-	if game.GameId ~= 7436755782 then
-		return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end)
+
+if game.GameId ~= 7436755782 then
+	return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end
+
+if getconnections then
+    for _, connection in pairs(getconnections(LocalPlayer.Idled)) do
+        if connection["Disable"] then
+            connection["Disable"](connection)
+        elseif connection["Disconnect"] then
+            connection["Disconnect"](connection)
+        end
+    end
+else
+    LocalPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end
+
+local function OnErrorMessageChanged(ErrorMessage)
+    if ErrorMessage then
+        task.wait(1)
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end
+end
+
+GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+LocalPlayer.OnTeleport:Connect(function(State)
+	if not TeleportCheck and queuetp then
+		TeleportCheck = true
+		queuetp("loadstring(game:HttpGet('https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066'))()")
 	end
 end)
 
@@ -77,6 +118,10 @@ local UsernameIdPairs = {}
 local pass, MarketController = pcall(function()
 	return require(ReplicatedStorage.Modules.MarketController)
 end)
+local GiftDropdown
+
+local Farms = workspace:FindFirstChild("Farm")
+local MyFarm
 
 if not pass then
     Window:Notify({
@@ -111,7 +156,6 @@ if not getgenv().Products or not getgenv().ProductOptions then
     getgenv().ProductOptions = ProductOptions
 end
 
-local GiftDropdown
 local function RefreshUserTable()
 	table.clear(Users)
 	table.clear(UsernameIdPairs)
@@ -127,26 +171,40 @@ local function RefreshUserTable()
 		GiftDropdown:InsertOptions(Users)
 	end
 end
+
 RefreshUserTable()
 
 Players.PlayerAdded:Connect(RefreshUserTable)
 Players.PlayerRemoving:Connect(RefreshUserTable)
 
-LocalPlayer.Idled:Connect(function()
-	task.wait(5)
-	VirtualUser:Button2Down(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	VirtualUser:Button2Up(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(5)
-end)
-
-local function OnErrorMessageChanged(ErrorMessage)
-    if ErrorMessage then
-        task.wait(1)
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end
+for _, Farm in pairs(Farms:GetChildren()) do
+	local Important = Farm.Important
+	local Data = Important.Data
+	local Owner = Data.Owner
+	if Owner.Value == LocalPlayer.Name then
+		MyFarm = Farm
+	end
 end
-GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+local MyImportant = MyFarm.Important
+local MyPlants = MyImportant.Plants_Physical
+local MyCosmetics = MyImportant.Cosmetic_Physical
+
+local function SetPlantVisibility(Value)
+	if Value then
+		MyPlants.Parent = nil
+	else
+		MyPlants.Parent = MyImportant
+	end
+end
+
+local function SetCosmeticVisibility(Value)
+	if Value then
+		MyCosmetics.Parent = nil
+	else
+		MyCosmetics.Parent = MyImportant
+	end
+end
 
 ShopSection:Button({
     Name = "Buy",
@@ -216,6 +274,22 @@ ShopSection:Paragraph({
     Header = "Gift Instructions",
     Body = "Choose the non-gift version of a product that can be gifted. Select the player to send the gift to, then press the Send Gift button."
 })
+
+SettingsSection:Toggle({
+	Name = "Hide Plants",
+	Default = false,
+	Callback = function(value)
+		SetPlantVisibility(value)
+	end,
+}, "Hide Plants")
+
+SettingsSection:Toggle({
+	Name = "Hide Cosmetics",
+	Default = false,
+	Callback = function(value)
+		SetCosmeticVisibility(value)
+	end,
+}, "Hide Cosmetics")
 
 SettingsSection:Toggle({
 	Name = "Disable 3D Rendering",
@@ -292,5 +366,7 @@ Tab:Select(Tab)
 Window.onUnloaded(function()
     SelectedItem = nil
     SelectedPlayer = nil
+	SetPlantVisibility(nil)
+	SetCosmeticVisibility(nil)
     RunService:Set3dRenderingEnabled(true)
 end)

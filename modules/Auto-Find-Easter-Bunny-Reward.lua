@@ -14,6 +14,18 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer.PlayerGui
 
+local function FindFunction(t, f)
+    if type(f) == t then
+        return f
+    end
+    return nil
+end
+
+local Request = FindFunction("function", request or http_request or (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request))
+local getconnections = FindFunction("function", getconnections or get_signal_cons)
+local queuetp = FindFunction("function", queue_on_teleport)
+local TeleportCheck
+
 task.spawn(function()
 	local Request = (fluxus and fluxus.request)
 		or (http and http.request)
@@ -36,11 +48,44 @@ task.spawn(function()
 			})
 		end)
 	end
-	if game.PlaceId == 129954712878723 then
-		return
-	end
-	if game.GameId ~= 7436755782 then
-		return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end)
+
+if game.PlaceId == 129954712878723 then
+	return
+end
+
+if game.GameId ~= 7436755782 then
+	return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end
+
+if getconnections then
+    for _, connection in pairs(getconnections(LocalPlayer.Idled)) do
+        if connection["Disable"] then
+            connection["Disable"](connection)
+        elseif connection["Disconnect"] then
+            connection["Disconnect"](connection)
+        end
+    end
+else
+    LocalPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end
+
+local function OnErrorMessageChanged(ErrorMessage)
+    if ErrorMessage then
+        task.wait(1)
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end
+end
+
+GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+LocalPlayer.OnTeleport:Connect(function(State)
+	if not TeleportCheck and queuetp then
+		TeleportCheck = true
+		queuetp("loadstring(game:HttpGet('https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066'))()")
 	end
 end)
 
@@ -106,6 +151,9 @@ local EasterBunnyLoopRunning
 local AutoEasterBunnyEnabled
 local EasterEggRewardConnection
 
+local Farms = workspace:FindFirstChild("Farm")
+local MyFarm
+
 local function AutoEasterBunnyLoop()
 	if EasterBunnyLoopRunning then
 		return
@@ -134,21 +182,34 @@ local function AutoEasterBunnyLoop()
 	end)
 end
 
-LocalPlayer.Idled:Connect(function()
-	task.wait(5)
-	VirtualUser:Button2Down(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	VirtualUser:Button2Up(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(5)
-end)
-
-local function OnErrorMessageChanged(ErrorMessage)
-    if ErrorMessage then
-        task.wait(1)
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end
+for _, Farm in pairs(Farms:GetChildren()) do
+	local Important = Farm.Important
+	local Data = Important.Data
+	local Owner = Data.Owner
+	if Owner.Value == LocalPlayer.Name then
+		MyFarm = Farm
+	end
 end
-GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+local MyImportant = MyFarm.Important
+local MyPlants = MyImportant.Plants_Physical
+local MyCosmetics = MyImportant.Cosmetic_Physical
+
+local function SetPlantVisibility(Value)
+	if Value then
+		MyPlants.Parent = nil
+	else
+		MyPlants.Parent = MyImportant
+	end
+end
+
+local function SetCosmeticVisibility(Value)
+	if Value then
+		MyCosmetics.Parent = nil
+	else
+		MyCosmetics.Parent = MyImportant
+	end
+end
 
 local AutoEasterBunny = MiscGroupbox:CreateToggle({
     Name = "Auto-Find Easter Bunny Reward",
@@ -161,6 +222,24 @@ local AutoEasterBunny = MiscGroupbox:CreateToggle({
         end
     end,
 }, "Auto-Find Easter Bunny Toggle")
+
+local HidePlants = GameSettings:CreateToggle({
+	Name = "Hide Plants",
+	CurrentValue = false,
+	Style = 2,
+	Callback = function(Value)
+		SetPlantVisibility(Value)
+	end,
+}, "Hide Plants")
+
+local HideCosmetics = GameSettings:CreateToggle({
+	Name = "Hide Cosmetics",
+	CurrentValue = false,
+	Style = 2,
+	Callback = function(Value)
+		SetCosmeticVisibility(Value)
+	end,
+}, "Hide Cosmetics")
 
 local DeRender = GameSettings:CreateToggle({
 	Name = "Disable 3D Rendering",
@@ -198,6 +277,8 @@ local Rejoin = GameSettings:CreateButton({
 Starlight:OnDestroy(function()
     AutoEasterBunnyLoop = nil
     AutoEasterBunnyEnabled = nil
+	SetPlantVisibility(nil)
+	SetCosmeticVisibility(nil)
     RunService:Set3dRenderingEnabled(true)
 end)
 

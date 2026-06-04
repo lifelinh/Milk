@@ -7,7 +7,7 @@ local NebulaIcons = loadstring(game:HttpGet("https://raw.githubusercontent.com/t
 
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local GameEvents = ReplicatedStorage.GameEvents
+local GameEvents = ReplicatedStorage:FindFirstChild("GameEvents")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
 local GuiService = game:GetService("GuiService")
@@ -15,6 +15,18 @@ local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer.PlayerGui
+
+local function FindFunction(t, f)
+    if type(f) == t then
+        return f
+    end
+    return nil
+end
+
+local Request = FindFunction("function", request or http_request or (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request))
+local getconnections = FindFunction("function", getconnections or get_signal_cons)
+local queuetp = FindFunction("function", queue_on_teleport)
+local TeleportCheck
 
 task.spawn(function()
 	local Request = (fluxus and fluxus.request)
@@ -38,11 +50,44 @@ task.spawn(function()
 			})
 		end)
 	end
-	if game.PlaceId == 129954712878723 then
-		return
-	end
-	if game.GameId ~= 7436755782 then
-		return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end)
+
+if game.PlaceId == 129954712878723 then
+	return
+end
+
+if game.GameId ~= 7436755782 then
+	return loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+end
+
+if getconnections then
+    for _, connection in pairs(getconnections(LocalPlayer.Idled)) do
+        if connection["Disable"] then
+            connection["Disable"](connection)
+        elseif connection["Disconnect"] then
+            connection["Disconnect"](connection)
+        end
+    end
+else
+    LocalPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end
+
+local function OnErrorMessageChanged(ErrorMessage)
+    if ErrorMessage then
+        task.wait(1)
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end
+end
+
+GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+LocalPlayer.OnTeleport:Connect(function(State)
+	if not TeleportCheck and queuetp then
+		TeleportCheck = true
+		queuetp("loadstring(game:HttpGet('https://raw.githubusercontent.com/the-amazing-digital-circus/Milk/main/126884695634066'))()")
 	end
 end)
 
@@ -117,6 +162,9 @@ local InserPart = Machine:WaitForChild("InserPart")
 local RoyalJellyMachine = Interaction:WaitForChild("Royal Jelly Machine")
 local JellyCraftingMachine = RoyalJellyMachine:WaitForChild("JellyCraftingMachine")
 local PromptHolder = JellyCraftingMachine:FindFirstChild("PromptHolder")
+
+local Farms = workspace:FindFirstChild("Farm")
+local MyFarm
 
 local function IncubateHoneyLoop()
 	if IsIncubatingHoney then
@@ -195,21 +243,34 @@ local function IncubateJellyLoop()
 	IsIncubatingJelly = false
 end
 
-LocalPlayer.Idled:Connect(function()
-	task.wait(5)
-	VirtualUser:Button2Down(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	VirtualUser:Button2Up(Vector2.zero, workspace.CurrentCamera.CFrame)
-	task.wait(5)
-end)
-
-local function OnErrorMessageChanged(ErrorMessage)
-    if ErrorMessage then
-        task.wait(1)
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end
+for _, Farm in pairs(Farms:GetChildren()) do
+	local Important = Farm.Important
+	local Data = Important.Data
+	local Owner = Data.Owner
+	if Owner.Value == LocalPlayer.Name then
+		MyFarm = Farm
+	end
 end
-GuiService.ErrorMessageChanged:Connect(OnErrorMessageChanged)
+
+local MyImportant = MyFarm.Important
+local MyPlants = MyImportant.Plants_Physical
+local MyCosmetics = MyImportant.Cosmetic_Physical
+
+local function SetPlantVisibility(Value)
+	if Value then
+		MyPlants.Parent = nil
+	else
+		MyPlants.Parent = MyImportant
+	end
+end
+
+local function SetCosmeticVisibility(Value)
+	if Value then
+		MyCosmetics.Parent = nil
+	else
+		MyCosmetics.Parent = MyImportant
+	end
+end
 
 local AutoHoneyIncubateToggle = FarmGroupbox:CreateToggle({
     Name = "Auto-Honey Incubate Held Seed",
@@ -234,6 +295,24 @@ local AutoJellyIncubateToggle = FarmGroupbox:CreateToggle({
         end
     end,
 }, "Auto Jelly Incubator")
+
+local HidePlants = GameSettings:CreateToggle({
+	Name = "Hide Plants",
+	CurrentValue = false,
+	Style = 2,
+	Callback = function(Value)
+		SetPlantVisibility(Value)
+	end,
+}, "Hide Plants")
+
+local HideCosmetics = GameSettings:CreateToggle({
+	Name = "Hide Cosmetics",
+	CurrentValue = false,
+	Style = 2,
+	Callback = function(Value)
+		SetCosmeticVisibility(Value)
+	end,
+}, "Hide Cosmetics")
 
 local DeRender = GameSettings:CreateToggle({
 	Name = "Disable 3D Rendering",
@@ -273,6 +352,8 @@ Starlight:OnDestroy(function()
     IsIncubatingHoney = nil
 	AutoJellyIncubateEnabled = nil
 	IsIncubatingJelly = nil
+	SetPlantVisibility(nil)
+	SetCosmeticVisibility(nil)
     RunService:Set3dRenderingEnabled(true)
 end)
 
