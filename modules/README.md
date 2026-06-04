@@ -28,7 +28,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 <details>
   <summary>Module 2 "Auto-Incubate"</summary>
 
-  This module contains one toggle, which automatically uses the Incubator introduced in the Bizzy Bees 2026 event.
+  ### The Bizzy Bees event has ended, so this module will no longer work.
+
+  This module contains one toggle, which automatically uses the incubators introduced in the Bizzy Bees 2026 event.
 
   The feature will automatically submit one seed to the incubator, pay the required Honey Coins, collect the seed once the incubation period is over, then repeats. It will continue repeating until you are no longer holding a seed.
 
@@ -43,6 +45,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 </details>
 <details>
   <summary>Module 3 "Auto-Wasp"</summary>
+
+  ### The Bizzy Bees event has ended, so this module no longer will work.
 
   This module contains one toggle that will automatically teleport to wasp eggs, and wait until they are killed by the player's bees, before teleporting to the next wasp egg.
 
