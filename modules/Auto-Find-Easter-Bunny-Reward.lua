@@ -6,7 +6,6 @@ local Starlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/the
 local NebulaIcons = loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-circus/Nebula-Icons-Milk/master/Loader.luau"))()
 
 local HttpService = game:GetService("HttpService")
-local InsertService = game:GetService("InsertService")
 local VirtualUser = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
 local GuiService = game:GetService("GuiService")
