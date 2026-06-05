@@ -125,7 +125,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 
 See [`/modules`](./modules) for open-source, lightweight, standalone scripts that contain fewer features.
 
-<hr style="height:2px;border-width:0;color:gray;background-color:gray">
+---
+
+![](https://mbmsyxdoahapgsueazkm.supabase.co/functions/v1/readme-graph)
 
 > If you need any help, join the Discord server: https://discord.gg/9NyRdmfTgp
 
