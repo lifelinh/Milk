@@ -28,7 +28,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 <details>
   <summary>Module 2 "Auto-Incubate"</summary>
 
-  ### The Bizzy Bees event has ended, so this module will no longer work.
+  ### The Bizzy Bees event has ended, so this module may no longer work.
 
   This module contains one toggle, which automatically uses the incubators introduced in the Bizzy Bees 2026 event.
 
@@ -46,7 +46,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 <details>
   <summary>Module 3 "Auto-Wasp"</summary>
 
-  ### The Bizzy Bees event has ended, so this module no longer will work.
+  ### The Bizzy Bees event has ended, so this module may no longer work.
 
   This module contains one toggle that will automatically teleport to wasp eggs, and wait until they are killed by the player's bees, before teleporting to the next wasp egg.
 
