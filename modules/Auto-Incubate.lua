@@ -154,12 +154,17 @@ local IsIncubatingHoney
 local AutoJellyIncubateEnabled
 local IsIncubatingJelly
 
-local Interaction = workspace:WaitForChild("Interaction")
-local BeeEvent = Interaction:WaitForChild("BeeEvent")
-local Incubator = BeeEvent:WaitForChild("Incubator")
+local Modules = ReplicatedStorage:FindFirstChild("Modules")
+local WeeklyEvents = Modules:FindFirstChild("WeeklyEvents")
+local WeeklyEventController = Modules:FindFirstChild("WeeklyEventController")
+local TestEventFolder = WeeklyEventController:FindFirstChild("TestEvent")
+local TestEvent = TestEventFolder:FindFirstChild("TestEvent")
+
+local Incubator = TestEvent:WaitForChild("Incubator")
 local Machine = Incubator:WaitForChild("Machine")
 local InserPart = Machine:WaitForChild("InserPart")
-local RoyalJellyMachine = Interaction:WaitForChild("Royal Jelly Machine")
+
+local RoyalJellyMachine = TestEvent:WaitForChild("Royal Jelly Machine")
 local JellyCraftingMachine = RoyalJellyMachine:WaitForChild("JellyCraftingMachine")
 local PromptHolder = JellyCraftingMachine:FindFirstChild("PromptHolder")
 
@@ -173,6 +178,17 @@ local function IncubateHoneyLoop()
 	IsIncubatingHoney = true
 	while AutoHoneyIncubateEnabled do
 		local InsertPrompt = InserPart:FindFirstChild("InsertPrompt")
+		if InsertPrompt.ActionText == "Interact" then
+			Starlight:Notification({
+				Title = "Error",
+				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
+				Content = "You need to be on your Bizzy Bees garden to use this feature.",
+				Duration = 15,
+			}, "Honey Incubator Notif")
+			repeat
+				task.wait(2)
+			until InsertPrompt.ActionText ~= "Interact" or not AutoHoneyIncubateEnabled
+		end
 		if InsertPrompt.ActionText == "Remove Seed" then
 			task.wait(0.2)
 			GameEvents.BeeQueenHiveRemote:FireServer("RemoveSeed")
@@ -214,6 +230,17 @@ local function IncubateJellyLoop()
 		end
 	end
 	while AutoJellyIncubateEnabled do
+		if InsertPrompt.ActionText == "Interact" then
+			Starlight:Notification({
+				Title = "Error",
+				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
+				Content = "You need to be on your Bizzy Bees garden to use this feature.",
+				Duration = 15,
+			}, "Jelly Incubator Notif")
+			repeat
+				task.wait(2)
+			until InsertPrompt.ActionText ~= "Interact" or not AutoJellyIncubateEnabled
+		end
 		if not InsertPrompt.Enabled then
 			task.wait(0.2)
 			GameEvents.JellyCrafting:FindFirstChild("Remove"):FireServer()
