@@ -28,9 +28,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 <details>
   <summary>Module 2 "Auto-Incubate"</summary>
 
-  ### The Bizzy Bees event has ended, so this module may no longer work.
-
-  This module contains one toggle, which automatically uses the incubators introduced in the Bizzy Bees 2026 event.
+  This module contains one toggle, which automatically uses the incubators introduced in the Bizzy Bees 2026 event. Users must be on the Bizzy Bee plot to use the Honey Seed incubator, but the Jelly Seed Incubator will work regardless of what plot the player is on.
 
   The feature will automatically submit one seed to the incubator, pay the required Honey Coins, collect the seed once the incubation period is over, then repeats. It will continue repeating until you are no longer holding a seed.
 
@@ -46,11 +44,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 <details>
   <summary>Module 3 "Auto-Wasp"</summary>
 
-  ### The Bizzy Bees event has ended, so this module may no longer work.
-
   This module contains one toggle that will automatically teleport to wasp eggs, and wait until they are killed by the player's bees, before teleporting to the next wasp egg.
 
-  If there are no wasps active, then it will wait until a wasp egg is added, then teleport to it to fight the wasps.
+  If there are no wasps active, then it will wait until a wasp egg is added, then teleport to it to fight the wasps. Wasps are never active when the Bizzy Bee garden is inactive; users must switch to that plot to use this feature.
 
   Rewards from chests are automatically collected by the game after the chests despawn.
 
