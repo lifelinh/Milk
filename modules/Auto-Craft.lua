@@ -268,7 +268,6 @@ local function AutoCraftGearLoop()
 		return
 	end
 	IsCraftingGear = true
-	local CraftAttempts = 0
     while AutoCraftGearEnabled and GearRecipeSelected[1] do
 		if GearCraftingProximityPrompt.ActionText ~= "Select Recipe" then
 			if GearCraftingProximityPrompt.ActionText == "Claim" then
@@ -280,16 +279,6 @@ local function AutoCraftGearLoop()
 			elseif GearCraftingProximityPrompt.ActionText ~= "Skip" then
 				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", EventCraftingWorkBench, "GearEventWorkbench")
 				task.wait(1)
-				CraftAttempts += 1
-				if CraftAttempts > 10 then
-					Starlight:Notification({
-						Title = "Error",
-						Icon = NebulaIcons:GetIcon("circle-alert", "Lucide"),
-						Content = "You cannot afford to craft this recipe. Auto-Craft Gear has been disabled.",
-						Duration = 10,
-					}, "Gear Craft Notif")
-					break
-				end
 			end
 		end
         GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", EventCraftingWorkBench, "GearEventWorkbench", GearRecipeSelected[1])
@@ -373,7 +362,6 @@ local function AutoCraftSeedsLoop()
 		return
 	end
 	IsCraftingSeeds = true
-	local CraftAttempts = 0
     while AutoCraftSeedsEnabled and SeedRecipeSelected[1] do
         local SeedEventCraftingWorkBench = workspace.CraftingTables.SeedEventCraftingWorkBench
         local Model = SeedEventCraftingWorkBench.Model
@@ -389,16 +377,6 @@ local function AutoCraftSeedsLoop()
 			elseif SeedCraftingProximityPrompt.ActionText ~= "Skip" then
 				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", SeedEventCraftingWorkBench, "SeedEventWorkbench")
 				task.wait(1)
-				CraftAttempts += 1
-				if CraftAttempts > 10 then
-					Starlight:Notification({
-						Title = "Error",
-						Icon = NebulaIcons:GetIcon("circle-alert", "Lucide"),
-						Content = "You cannot afford to craft this recipe. Auto-Craft Seeds has been disabled.",
-						Duration = 10,
-					}, "Seed Craft Notif")
-					break
-				end
 			end
 		end
         GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
