@@ -238,8 +238,8 @@ local function SwapToLoadout(LoadoutNum)
 	local LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
 	if LoadoutSlot and LoadoutSlot.BackgroundColor3 ~= Color3.fromRGB(36, 227, 36) then
 		repeat
-			task.wait(2)
 			GameEvents.PetsService:FireServer("SwapPetLoadout", tonumber(LoadoutNum))
+			task.wait(5)
 			LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
 		until LoadoutSlot and LoadoutSlot.BackgroundColor3 == Color3.fromRGB(36, 227, 36)
 	end
