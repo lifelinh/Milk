@@ -252,7 +252,10 @@ ShopSection:Dropdown({
         if value then
             local ProductInformation = MarketplaceService:GetProductInfoAsync(SelectedItem, Enum.InfoType.Product)
             local TokenStatus, Reason = MarketController.CanPurchaseWithTokens(LocalPlayer, SelectedItem)
-            local ReasonText = typeof(Reason) == "string" and (Reason) or "Item is Robux-only"
+            local ReasonText = typeof(Reason) == "string" and (Reason)
+			if not TokenStatus and not Reason then
+				ReasonText = "Item is Robux-only"
+			end
             ItemStatus:UpdateHeader(value)
             ItemStatus:UpdateBody(string.format("Price: %s\nPurchasable w/ tokens: %s %s", tostring(ProductInformation.PriceInRobux), tostring(TokenStatus), ReasonText or ""))
         end
