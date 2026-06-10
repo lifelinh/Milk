@@ -123,7 +123,7 @@ Window:CreateHomeTab({
     }
 })
 
-local TabSection = Window:CreateTabSection("Panels")
+local TabSection = Window:CreateTabSection("Panels", false)
 
 local Auto = TabSection:CreateTab({
     Name = "Automation",
