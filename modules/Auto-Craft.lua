@@ -184,7 +184,7 @@ local RequirePassed, CraftingStationHandler = pcall(function()
 end)
 
 local WorkbenchFound, EventCraftingWorkBench = pcall(function()
-	local CraftingTables = workspace:FindFirstChild("CraftingTables")
+	local CraftingTables = workspace.NPCS:FindFirstChild("CraftingTables")
 	local EventCraftingWorkBench = CraftingTables.EventCraftingWorkBench
 	for _, Model in ipairs(EventCraftingWorkBench:GetChildren()) do
 		if Model.Name == "Model" then
@@ -362,11 +362,11 @@ local function AutoCraftSeedsLoop()
 		return
 	end
 	IsCraftingSeeds = true
+	local SeedEventCraftingWorkBench = workspace.NPCS.CraftingTables.SeedEventCraftingWorkBench
+	local Model = SeedEventCraftingWorkBench.Model
+	local BenchTable = Model.BenchTable
+	local SeedCraftingProximityPrompt = BenchTable.CraftingProximityPrompt
     while AutoCraftSeedsEnabled and SeedRecipeSelected[1] do
-        local SeedEventCraftingWorkBench = workspace.CraftingTables.SeedEventCraftingWorkBench
-        local Model = SeedEventCraftingWorkBench.Model
-        local BenchTable = Model.BenchTable
-        local SeedCraftingProximityPrompt = BenchTable.CraftingProximityPrompt
 		if SeedCraftingProximityPrompt.ActionText ~= "Select Recipe" then
 			if SeedCraftingProximityPrompt.ActionText == "Claim" then
 				if PachySlot then
