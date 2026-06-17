@@ -14,6 +14,8 @@ Grow a Garden updates weekly, and I am committed to keep up with their pacing! I
 <details>
   <summary>Media Gallery</summary>
 
+  Last updated: 25 May 2026
+
   <img width="700" alt="Home Page" src="https://github.com/user-attachments/assets/ceec43a6-2842-4b9b-bb28-85c03a60e7ef" />
 
   <img width="700" alt="Automation" src="https://github.com/user-attachments/assets/887f20dc-e0d5-4722-aa3b-290fcc3f7176" />
