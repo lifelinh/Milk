@@ -199,8 +199,7 @@ local WorkbenchFound, EventCraftingWorkBench = pcall(function()
 	return EventCraftingWorkBench
 end)
 
-local Farms = workspace:FindFirstChild("Farm")
-local MyFarm
+local MyImportant
 
 local function AutoCraftCampfireLoop()
 	if IsCraftingCampfire then
@@ -310,16 +309,15 @@ local function AutoCraftGearLoop()
 	IsCraftingGear = nil
 end
 
-for _, Farm in pairs(Farms:GetChildren()) do
+for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 	local Important = Farm.Important
-	local Data = Important.Data
-	local Owner = Data.Owner
+	local Owner = Important.Data.Owner
 	if Owner.Value == LocalPlayer.Name then
-		MyFarm = Farm
+		MyImportant = Important
+		break
 	end
 end
 
-local MyImportant = MyFarm.Important
 local MyPlants = MyImportant.Plants_Physical
 local MyCosmetics = MyImportant.Cosmetic_Physical
 
