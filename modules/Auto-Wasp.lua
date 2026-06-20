@@ -161,8 +161,7 @@ local AutoWaspBattleEnabled
 local FightingWasps
 local WaspEggConnection
 
-local Farms = workspace:FindFirstChild("Farm")
-local MyFarm
+local MyImportant
 
 local function AutoWaspDungeon()
 	if WaspDgLoopRunning then
@@ -242,16 +241,15 @@ local function AutoWaspBattle()
 	end)
 end
 
-for _, Farm in pairs(Farms:GetChildren()) do
+for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 	local Important = Farm.Important
-	local Data = Important.Data
-	local Owner = Data.Owner
+	local Owner = Important.Data.Owner
 	if Owner.Value == LocalPlayer.Name then
-		MyFarm = Farm
+		MyImportant = Important
+		break
 	end
 end
 
-local MyImportant = MyFarm.Important
 local MyPlants = MyImportant.Plants_Physical
 local MyCosmetics = MyImportant.Cosmetic_Physical
 
