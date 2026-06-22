@@ -168,7 +168,6 @@ local RoyalJellyMachine = TestEvent:WaitForChild("Royal Jelly Machine")
 local JellyCraftingMachine = RoyalJellyMachine:WaitForChild("JellyCraftingMachine")
 local PromptHolder = JellyCraftingMachine:FindFirstChild("PromptHolder")
 
-local Farms = workspace:FindFirstChild("Farm")
 local MyImportant
 
 local function IncubateHoneyLoop()
