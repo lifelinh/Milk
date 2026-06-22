@@ -250,8 +250,8 @@ for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 	end
 end
 
-local MyPlants = MyImportant.Plants_Physical
-local MyCosmetics = MyImportant.Cosmetic_Physical
+local MyPlants = MyImportant:FindFirstChild("Plants_Physical")
+local MyCosmetics = MyImportant:FindFirstChild("Cosmetic_Physical")
 
 local function SetPlantVisibility(Value)
 	if Value then
