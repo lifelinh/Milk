@@ -275,8 +275,12 @@ local Rejoin = GameSettings:CreateButton({
 Starlight:OnDestroy(function()
     AutoEasterBunnyLoop = nil
     AutoEasterBunnyEnabled = nil
-	SetPlantVisibility(nil)
-	SetCosmeticVisibility(nil)
+	if MyPlants then
+		SetPlantVisibility(nil)
+	end
+	if MyCosmetics then
+		SetCosmeticVisibility(nil)
+	end
     RunService:Set3dRenderingEnabled(true)
 end)
 

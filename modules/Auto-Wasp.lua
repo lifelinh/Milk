@@ -348,8 +348,12 @@ Starlight:OnDestroy(function()
     WaspBattleLoopRunning = nil
     AutoWaspBattleEnabled = nil
 	FightingWasps = nil
-	SetPlantVisibility(nil)
-	SetCosmeticVisibility(nil)
+	if MyPlants then
+		SetPlantVisibility(nil)
+	end
+	if MyCosmetics then
+		SetCosmeticVisibility(nil)
+	end
     RunService:Set3dRenderingEnabled(true)
 end)
 

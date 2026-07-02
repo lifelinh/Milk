@@ -377,8 +377,12 @@ Starlight:OnDestroy(function()
     IsIncubatingHoney = nil
 	AutoJellyIncubateEnabled = nil
 	IsIncubatingJelly = nil
-	SetPlantVisibility(nil)
-	SetCosmeticVisibility(nil)
+	if MyPlants then
+		SetPlantVisibility(nil)
+	end
+	if MyCosmetics then
+		SetCosmeticVisibility(nil)
+	end
     RunService:Set3dRenderingEnabled(true)
 end)
 

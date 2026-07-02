@@ -367,7 +367,11 @@ Tab:Select(Tab)
 Window.onUnloaded(function()
     SelectedItem = nil
     SelectedPlayer = nil
-	SetPlantVisibility(nil)
-	SetCosmeticVisibility(nil)
+	if MyPlants then
+		SetPlantVisibility(nil)
+	end
+	if MyCosmetics then
+		SetCosmeticVisibility(nil)
+	end
     RunService:Set3dRenderingEnabled(true)
 end)

@@ -419,7 +419,7 @@ local AutoCraftCampfire = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Campfire Toggle")
 
 local CampfireRecipes = AutoCraftCampfire:AddDropdown({
-	Options = {"1:1:Firepit Flower", "1:2:Cauliflower", "2:1:Campfire Crate", "2:2:Common Summer Egg", "2:3:Green Apple", "2:4:Avocado", "3:1:Super Watering Can", "3:2:Areaclaimer", "3:3:Banana", "3:4:Kiwi", "4:1:Hearth Reed", "4:2:Rare Summer Egg", "4:3:Prickly Pear", "5:1:Feijoa", "5:2:Paradise Egg", "5:3:Energy Chew", "5:4:Pitcher Plant", "5:5:Campfire Egg"},
+	Options = {"1:1:Firepit Flower", "1:2:Cauliflower", "2:1:Campfire Crate", "2:2:Common Summer Egg", "2:3:Green Apple", "2:4:Avocado", "3:1:Super Watering Can", "3:2:Areaclaimer", "3:3:Banana", "3:4:Kiwi", "4:1:Hearth Reed", "4:2:Smoke Stalk", "4:3:Rare Summer Egg", "4:4:Prickly Pear", "4:5:Flame Bear", "5:1:Feijoa", "5:2:Paradise Egg", "5:3:Energy Chew", "5:4:Pitcher Plant", "5:5:Campfire Egg"},
 	CurrentOptions = {},
 	MultipleOptions = false,
 	Placeholder = "no campfire recipe selected",
@@ -444,7 +444,7 @@ local AutoCraftGear = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Gear Toggle")
 
 local GearRecipes = AutoCraftGear:AddDropdown({
-    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Anti Bee Egg", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone", "Black Spotty Egg", "Tropical Mist Sprinkler", "Berry Blusher Sprinkler", "Spice Spritzer Sprinkler", "Flower Froster Sprinkler", "Stalk Sprout Sprinkler", "Sweet Soaker Sprinkler", "Mutation Spray Pollinated", "Honey Crafters Crate", "Mutation Spray Glimmering", "Mutation Spray Chilled", "Mutation Spray Shocked", "Mutation Spray Choc"},
+    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone", "Black Spotty Egg", "Anti Bee Egg", "Tropical Mist Sprinkler", "Berry Blusher Sprinkler", "Spice Spritzer Sprinkler", "Flower Froster Sprinkler", "Stalk Sprout Sprinkler", "Sweet Soaker Sprinkler", "Mutation Spray Pollinated", "Honey Crafters Crate", "Mutation Spray Glimmering", "Mutation Spray Chilled", "Mutation Spray Shocked", "Mutation Spray Choc"},
 	CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no gear recipe selected",
@@ -471,7 +471,7 @@ local AutoCraftSeeds = CraftGroupbox:CreateToggle({
 }, "Auto-Craft Seeds Toggle")
 
 local SeedRecipes = AutoCraftSeeds:AddDropdown({
-	Options = {"Egg Melon", "Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow", "Grand Volcania", "Peace Lily", "Aloe Vera", "Guanabana", "Crafters Seed Pack", "Manuka Flower", "Dandelion", "Lumira", "Honeysuckle", "Bee Balm", "Nectar Thorn", "Suncoil", "Twisted Tangle", "Veinpetal", "Horsetail", "Lingonberry", "Amber Spine"},
+	Options = {"Egg Melon", "Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow", "Shadow Spine", "Grand Volcania", "Peace Lily", "Aloe Vera", "Guanabana", "Crafters Seed Pack", "Manuka Flower", "Dandelion", "Lumira", "Honeysuckle", "Bee Balm", "Nectar Thorn", "Suncoil", "Twisted Tangle", "Veinpetal", "Horsetail", "Lingonberry", "Amber Spine"},
     CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no seed recipe selected",
@@ -597,8 +597,12 @@ Starlight:OnDestroy(function()
 	IsCraftingCampfire = nil
     IsCraftingGear = nil
     IsCraftingSeeds = nil
-	SetPlantVisibility(nil)
-	SetCosmeticVisibility(nil)
+	if MyPlants then
+		SetPlantVisibility(nil)
+	end
+	if MyCosmetics then
+		SetCosmeticVisibility(nil)
+	end
     RunService:Set3dRenderingEnabled(true)
 end)
 
