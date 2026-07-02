@@ -189,7 +189,7 @@ local MyPlants = MyImportant:FindFirstChild("Plants_Physical")
 local MyCosmetics = MyImportant:FindFirstChild("Cosmetic_Physical")
 
 local function SetPlantVisibility(Value)
-	if Value then
+	if Value and MyPlants then
 		MyPlants.Parent = nil
 	else
 		MyPlants.Parent = MyImportant
@@ -197,7 +197,7 @@ local function SetPlantVisibility(Value)
 end
 
 local function SetCosmeticVisibility(Value)
-	if Value then
+	if Value and MyCosmetics then
 		MyCosmetics.Parent = nil
 	else
 		MyCosmetics.Parent = MyImportant
