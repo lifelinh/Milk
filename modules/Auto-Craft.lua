@@ -149,27 +149,15 @@ local GameSettings = Settings:CreateGroupbox({
 	Column = 1,
 }, "Game Settings")
 
-local AutoCraftCampfireEnabled
 local AutoCraftGearEnabled
 local AutoCraftSeedsEnabled
-local CampfireRecipeSelected = {}
 local GearRecipeSelected = {}
 local SeedRecipeSelected = {}
 local OrangutanSlot
 local ForgerHamsterSlot
 local PachySlot
-local IsCraftingCampfire
 local IsCraftingGear
 local IsCraftingSeeds
-
-local SummerCrafting = PlayerGui:FindFirstChild("SummerCrafting")
-local Crafting = SummerCrafting:FindFirstChild("Crafting")
-local Main = Crafting:FindFirstChild("Main")
-local Campfire = Main:FindFirstChild("Campfire")
-local CampfireCrafting = Campfire:FindFirstChild("Crafting")
-local Craft1 = CampfireCrafting:FindFirstChild("Craft1")
-local Craft2 = CampfireCrafting:FindFirstChild("Craft2")
-local Craft3 = CampfireCrafting:FindFirstChild("Craft3")
 
 local ActivePetUI = PlayerGui:FindFirstChild("ActivePetUI")
 local ActivePetFrame = ActivePetUI:FindFirstChild("Frame")
@@ -200,38 +188,6 @@ local WorkbenchFound, EventCraftingWorkBench = pcall(function()
 end)
 
 local MyImportant
-
-local function AutoCraftCampfireLoop()
-	if IsCraftingCampfire then
-		return
-	end 
-	IsCraftingCampfire = true
-	local SummerCraftingService = GameEvents.SummerCraftingService
-	local TimesLeft = {Craft1.TimeLeft, Craft2.TimeLeft, Craft3.TimeLeft}
-	while AutoCraftCampfireEnabled and CampfireRecipeSelected[1] do
-		local HasOpenSlot = nil
-		local HasClaim = nil
-		for Index, TimeLeft in ipairs(TimesLeft) do
-			if TimeLeft.Visible and TimeLeft.Text == "CLAIM!" then
-				HasClaim = true
-				SummerCraftingService.ClaimCraft:FireServer(Index)
-				task.wait(0.2)
-			end
-			if not TimeLeft.Visible then
-				HasOpenSlot = true
-			end
-		end
-		if HasOpenSlot then
-			SummerCraftingService.StartCraft:FireServer(CampfireRecipeSelected[1])
-			task.wait(0.5)
-		elseif not HasClaim then
-			repeat
-				task.wait(2)
-			until not AutoCraftCampfireEnabled or not CampfireRecipeSelected[1] or not TimesLeft[1].Visible or not TimesLeft[2].Visible or not TimesLeft[3].Visible or TimesLeft[1].Text == "CLAIM!" or TimesLeft[2].Text == "CLAIM!" or TimesLeft[3].Text == "CLAIM!"
-		end
-	end
-	IsCraftingCampfire = nil
-end
 
 local function SwapToLoadout(LoadoutNum)
 	local LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
@@ -406,31 +362,6 @@ local function AutoCraftSeedsLoop()
 	IsCraftingSeeds = nil
 end
 
-local AutoCraftCampfire = CraftGroupbox:CreateToggle({
-    Name = "Auto-Craft Campfire Recipe",
-    CurrentValue = false,
-    Style = 2,
-    Callback = function(Value)
-        AutoCraftCampfireEnabled = Value
-        if Value then
-            task.spawn(AutoCraftCampfireLoop)
-        end
-    end,
-}, "Auto-Craft Campfire Toggle")
-
-local CampfireRecipes = AutoCraftCampfire:AddDropdown({
-	Options = {"1:1:Firepit Flower", "1:2:Cauliflower", "2:1:Campfire Crate", "2:2:Common Summer Egg", "2:3:Green Apple", "2:4:Avocado", "3:1:Super Watering Can", "3:2:Areaclaimer", "3:3:Banana", "3:4:Kiwi", "4:1:Hearth Reed", "4:2:Smoke Stalk", "4:3:Rare Summer Egg", "4:4:Prickly Pear", "4:5:Flame Bear", "5:1:Feijoa", "5:2:Paradise Egg", "5:3:Energy Chew", "5:4:Pitcher Plant", "5:5:Campfire Egg"},
-	CurrentOptions = {},
-	MultipleOptions = false,
-	Placeholder = "no campfire recipe selected",
-	Callback = function(Options)
-		CampfireRecipeSelected = Options
-		if AutoCraftCampfireEnabled then
-			task.spawn(AutoCraftCampfireLoop)
-		end
-	end,
-}, "Campfire Recipe Dropdown")
-
 local AutoCraftGear = CraftGroupbox:CreateToggle({
     Name = "Auto-Craft Gear",
     CurrentValue = false,
@@ -585,16 +516,13 @@ local Rejoin = GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-	AutoCraftCampfireEnabled = nil
     AutoCraftGearEnabled = nil
     AutoCraftSeedsEnabled = nil
-	CampfireRecipeSelected = {}
     GearRecipeSelected = {}
     SeedRecipeSelected = {}
     OrangutanSlot = nil
     ForgerHamsterSlot = nil
     PachySlot = nil
-	IsCraftingCampfire = nil
     IsCraftingGear = nil
     IsCraftingSeeds = nil
 	if MyPlants then

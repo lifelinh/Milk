@@ -10,7 +10,7 @@ This is kept open-source for educational purposes; others are welcome to use the
 <details>
   <summary>Module 1 "Auto-Craft"</summary>
 
-  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic. Users are still able to craft the Anti Bee Egg and the Pack Bee with the feature, despite them being removed after the Bizzy Bees 2026 update.
+  This module contains toggles and dropdown menus for selecting a recipe and repeatedly crafting it. No user action besides configuring the dropdown options and toggling the feature is required, as it is fully automatic.
 
   It also is possible to set pet loadout slot numbers if the user has pets that assist with any crafting stages. The script will automatically switch to these loadouts during the process.
 
@@ -46,7 +46,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/the-amazing-digital-c
 
   This module contains one toggle that will automatically teleport to wasp eggs, and wait until they are killed by the player's bees, before teleporting to the next wasp egg.
 
-  If there are no wasps active, then it will wait until a wasp egg is added, then teleport to it to fight the wasps. Wasps are never active when the Bizzy Bee garden is inactive; users must switch to that plot to use this feature.
+  If there are no wasps active, then it will wait until a wasp egg is added, then teleport to it to fight the wasps.
 
   Rewards from chests are automatically collected by the game after the chests despawn.
 
