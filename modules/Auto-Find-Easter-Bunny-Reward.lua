@@ -164,19 +164,29 @@ local function AutoEasterBunnyLoop()
 			break
 		end
 		if Object.Name == "EasterEggReward" then
-			Character:PivotTo(Object:GetPivot() + Vector3.new(0, 5, 0))
-			task.wait(0.2)
+			Character:PivotTo(Object:GetPivot() + Vector3.new(0, 2, 0))
+			task.wait(0.5)
 		end
 	end
+	local Queue = {}
 	EasterEggRewardConnection = workspace.ChildAdded:Connect(function(Child)
 		if not AutoEasterBunnyEnabled then
 			EasterBunnyLoopRunning = false
 			EasterEggRewardConnection:Disconnect()
 			EasterEggRewardConnection = nil
+			Queue = {}
 			return
 		end
 		if Child.Name == "EasterEggReward" then
-			Character:PivotTo(Child:GetPivot() + Vector3.new(0, 5, 0))
+			table.insert(Queue, Child)
+			while #Queue > 0 and AutoEasterBunnyEnabled and task.wait(0.5) do
+				local Item = table.remove(Queue, 1)
+				if Item and Item.Parent then
+					pcall(function()
+						Character:PivotTo(Child:GetPivot() + Vector3.new(0, 2, 0))
+					end)
+				end
+			end
 		end
 	end)
 end
