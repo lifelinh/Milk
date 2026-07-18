@@ -190,26 +190,24 @@ end)
 local MyImportant
 
 local function SwapToLoadout(LoadoutNum)
-	local LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
-	if LoadoutSlot and LoadoutSlot.BackgroundColor3 ~= Color3.fromRGB(36, 227, 36) then
-		repeat
-			GameEvents.PetsService:FireServer("SwapPetLoadout", tonumber(LoadoutNum))
-			task.wait(5)
-			LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
-		until LoadoutSlot and LoadoutSlot.BackgroundColor3 == Color3.fromRGB(36, 227, 36)
+	if LoadoutNum then
+		if LoadoutNum == 2 then
+			LoadoutNum = 3
+		elseif LoadoutNum == 3 then
+			LoadoutNum = 2
+		end
+		local LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
+		if LoadoutSlot and LoadoutSlot.BackgroundColor3 ~= Color3.fromRGB(36, 227, 36) then
+			repeat
+				GameEvents.PetsService:FireServer("SwapPetLoadout", tonumber(LoadoutNum))
+				task.wait(5)
+				LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
+			until LoadoutSlot and LoadoutSlot.BackgroundColor3 == Color3.fromRGB(36, 227, 36)
+		end
 	end
 end
 
 local function AutoCraftGearLoop()
-	if not RequirePassed then
-		Starlight:Notification({
-			Title = "Error",
-			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-			Content = "Auto-Craft is not supported on your executor.",
-			Duration = 10,
-		}, "Auto Craft Req Error")
-		return
-	end
 	if not WorkbenchFound then
 		Starlight:Notification({
 			Title = "Error",
@@ -224,40 +222,43 @@ local function AutoCraftGearLoop()
 	end
 	IsCraftingGear = true
     while AutoCraftGearEnabled and GearRecipeSelected[1] do
-		if GearCraftingProximityPrompt.ActionText ~= "Select Recipe" then
-			if GearCraftingProximityPrompt.ActionText == "Claim" then
-				if PachySlot then
-					SwapToLoadout(PachySlot)
-				end
-				GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
-				task.wait(1)
-			elseif GearCraftingProximityPrompt.ActionText ~= "Skip" then
-				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", EventCraftingWorkBench, "GearEventWorkbench")
-				task.wait(1)
-			end
+		if GearCraftingProximityPrompt.ActionText == "Claim" then
+			SwapToLoadout(PachySlot)
+			GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
+			task.wait(1)
+		elseif GearCraftingProximityPrompt.ActionText ~= "Skip" then
+			GameEvents.CraftingGlobalObjectService:FireServer("Cancel", EventCraftingWorkBench, "GearEventWorkbench")
+			task.wait(1)
 		end
-        GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", EventCraftingWorkBench, "GearEventWorkbench", GearRecipeSelected[1])
-        task.wait(1)
-		if GearCraftingProximityPrompt.ActionText == "Submit Item" and OrangutanSlot then
-			SwapToLoadout(OrangutanSlot)
+		if GearCraftingProximityPrompt.ActionText == "Select Recipe" then
+        	GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", EventCraftingWorkBench, "GearEventWorkbench", GearRecipeSelected[1])
 		end
-        CraftingStationHandler:SubmitAllRequiredItems(EventCraftingWorkBench)
-        task.wait(1)
-		if not AutoCraftGearEnabled or not GearRecipeSelected[1] then
+		task.wait(1)
+		if not RequirePassed then
+			Starlight:Notification({
+				Title = "Error",
+				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
+				Content = "Auto-Craft is not supported on your executor.",
+				Duration = 10,
+			}, "Auto Craft Req Error")
 			break
 		end
-        GameEvents.CraftingGlobalObjectService:FireServer("Craft", EventCraftingWorkBench, "GearEventWorkbench")
-		task.wait(1)
-		if GearCraftingProximityPrompt.ActionText == "Skip" and ForgerHamsterSlot then
-			SwapToLoadout(ForgerHamsterSlot)
+		if GearCraftingProximityPrompt.ActionText == "Submit Item" then
+			SwapToLoadout(OrangutanSlot)
+			CraftingStationHandler:SubmitAllRequiredItems(EventCraftingWorkBench)
+			task.wait(1)
+			GameEvents.CraftingGlobalObjectService:FireServer("Craft", EventCraftingWorkBench, "GearEventWorkbench")
 		end
+		if not AutoCraftGearEnabled or not SeedRecipeSelected[1] then
+			break
+		end
+		task.wait(1)
         repeat
+			SwapToLoadout(ForgerHamsterSlot)
             task.wait(2)
         until not AutoCraftGearEnabled or not GearRecipeSelected[1] or GearCraftingProximityPrompt.ActionText ~= "Skip"
         if AutoCraftGearEnabled and GearRecipeSelected[1] then
-			if GearCraftingProximityPrompt.ActionText == "Claim" and PachySlot then
-				SwapToLoadout(PachySlot)
-			end
+			SwapToLoadout(PachySlot)
 			GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
 			task.wait(1)
 		end
@@ -294,15 +295,6 @@ local function SetCosmeticVisibility(Value)
 end
 
 local function AutoCraftSeedsLoop()
-	if not RequirePassed then
-		Starlight:Notification({
-			Title = "Error",
-			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-			Content = "Auto-Craft is not supported on your executor.",
-			Duration = 10,
-		}, "Auto Craft Req Error")
-		return
-	end
 	if not WorkbenchFound then
 		Starlight:Notification({
 			Title = "Error",
@@ -321,40 +313,42 @@ local function AutoCraftSeedsLoop()
 	local BenchTable = Model.BenchTable
 	local SeedCraftingProximityPrompt = BenchTable.CraftingProximityPrompt
     while AutoCraftSeedsEnabled and SeedRecipeSelected[1] do
-		if SeedCraftingProximityPrompt.ActionText ~= "Select Recipe" then
-			if SeedCraftingProximityPrompt.ActionText == "Claim" then
-				if PachySlot then
-					SwapToLoadout(PachySlot)
-				end
-				GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
-				task.wait(1)
-			elseif SeedCraftingProximityPrompt.ActionText ~= "Skip" then
-				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", SeedEventCraftingWorkBench, "SeedEventWorkbench")
-				task.wait(1)
-			end
+		if SeedCraftingProximityPrompt.ActionText == "Claim" then
+			SwapToLoadout(PachySlot)
+			GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
+			task.wait(1)
+		elseif SeedCraftingProximityPrompt.ActionText ~= "Skip" then
+			GameEvents.CraftingGlobalObjectService:FireServer("Cancel", SeedEventCraftingWorkBench, "SeedEventWorkbench")
+			task.wait(1)
 		end
-        GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
-        task.wait(1)
-		if OrangutanSlot and SeedCraftingProximityPrompt.ActionText == "Submit Item" then
+		if SeedCraftingProximityPrompt.ActionText == "Select Recipe" then
+        	GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
+        end
+		task.wait(1)
+		if not RequirePassed then
+			Starlight:Notification({
+				Title = "Error",
+				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
+				Content = "Auto-Craft is not supported on your executor.",
+				Duration = 10,
+			}, "Auto Craft Req Error")
+			break
+		end
+		if SeedCraftingProximityPrompt.ActionText == "Submit Item" then
 			SwapToLoadout(OrangutanSlot)
-		end
-        CraftingStationHandler:SubmitAllRequiredItems(SeedEventCraftingWorkBench)
-        task.wait(1)
+        	CraftingStationHandler:SubmitAllRequiredItems(SeedEventCraftingWorkBench)
+        	task.wait(1)
+	        GameEvents.CraftingGlobalObjectService:FireServer("Craft", SeedEventCraftingWorkBench, "SeedEventWorkbench")
 		if not AutoCraftSeedsEnabled or not SeedRecipeSelected[1] then
 			break
 		end
-        GameEvents.CraftingGlobalObjectService:FireServer("Craft", SeedEventCraftingWorkBench, "SeedEventWorkbench")
 		task.wait(1)
-		if ForgerHamsterSlot and SeedCraftingProximityPrompt.ActionText == "Skip" then
-			SwapToLoadout(ForgerHamsterSlot)
-		end
         repeat
+			SwapToLoadout(ForgerHamsterSlot)
             task.wait(2)
         until not AutoCraftSeedsEnabled or not SeedRecipeSelected[1] or SeedCraftingProximityPrompt.ActionText ~= "Skip"
         if AutoCraftSeedsEnabled and SeedRecipeSelected[1] then
-			if PachySlot and SeedCraftingProximityPrompt.ActionText == "Claim" then
-				SwapToLoadout(PachySlot)
-			end
+			SwapToLoadout(PachySlot)
 			GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
 			task.wait(1)
 		end
@@ -422,13 +416,7 @@ local OrangutanSlotInput = CraftGroupbox:CreateInput({
     CurrentValue = "",
     Numeric = true,
     Callback = function(Text)
-        if Text == "2" then
-            OrangutanSlot = "3"
-        elseif Text == "3" then
-            OrangutanSlot = "2"
-        else
-            OrangutanSlot = Text
-        end
+        OrangutanSlot = tonumber(Text)
     end,
 }, "Orangutan Slot")
 
@@ -438,13 +426,7 @@ local ForgerHamsterSlotInput = CraftGroupbox:CreateInput({
     CurrentValue = "",
     Numeric = true,
     Callback = function(Text)
-        if Text == "2" then
-            ForgerHamsterSlot = "3"
-        elseif Text == "3" then
-            ForgerHamsterSlot = "2"
-        else
-            ForgerHamsterSlot = Text
-        end
+        ForgerHamsterSlot = tonumber(Text)
     end,
 }, "Forger Slot")
 
@@ -454,13 +436,7 @@ local PachySlotInput = CraftGroupbox:CreateInput({
     CurrentValue = "",
     Numeric = true,
     Callback = function(Text)
-        if Text == "2" then
-            PachySlot = "3"
-        elseif Text == "3" then
-            PachySlot = "2"
-        else
-            PachySlot = Text
-        end
+        PachySlot = tonumber(Text)
     end,
 }, "Pachy Slot")
 
