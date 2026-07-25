@@ -165,7 +165,6 @@ end)
 
 local GearCraftingProximityPrompt
 local CraftingTables = workspace.NPCS:FindFirstChild("CraftingTables")
-local GearCraftingProximityPrompt
 local WorkbenchFound, EventCraftingWorkBench = pcall(function()
 	local EventCraftingWorkBench = CraftingTables.EventCraftingWorkBench
 	for _, Model in ipairs(EventCraftingWorkBench:GetChildren()) do
@@ -189,12 +188,12 @@ local function SwapToLoadout(LoadoutNum)
 		elseif LoadoutNum == 3 then
 			LoadoutNum = 2
 		end
-		local LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
+		local LoadoutSlot = ButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
 		if LoadoutSlot and LoadoutSlot.BackgroundColor3 ~= Color3.fromRGB(36, 227, 36) then
 			repeat
 				GameEvents.PetsService:FireServer("SwapPetLoadout", tonumber(LoadoutNum))
 				task.wait(5)
-				LoadoutSlot = ActivePetButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
+				LoadoutSlot = ButtonHolder:FindFirstChild("PET_LOADOUT_" .. LoadoutNum)
 			until LoadoutSlot and LoadoutSlot.BackgroundColor3 == Color3.fromRGB(36, 227, 36)
 		end
 	end
@@ -250,16 +249,6 @@ local function AutoCraftGearLoop()
 	CraftGear()
 end
 
-local MyImportant
-for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
-	local Important = Farm.Important
-	local Owner = Important.Data.Owner
-	if Owner.Value == LocalPlayer.Name then
-		MyImportant = Important
-		break
-	end
-end
-
 local SeedCraftingProximityPromptConnection
 local function AutoCraftSeedsLoop()
 	IsCraftingSeeds = true
@@ -310,6 +299,16 @@ local function AutoCraftSeedsLoop()
 	end
 	SeedCraftingProximityPromptConnection = SeedCraftingProximityPrompt:GetPropertyChangedSignal("ActionText"):Connect(CraftSeed)
 	CraftSeed()
+end
+
+local MyImportant
+for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
+	local Important = Farm.Important
+	local Owner = Important.Data.Owner
+	if Owner.Value == LocalPlayer.Name then
+		MyImportant = Important
+		break
+	end
 end
 
 local MyPlants = MyImportant:FindFirstChild("Plants_Physical")
