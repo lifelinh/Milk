@@ -109,7 +109,7 @@ local Window = Starlight:CreateWindow({
 })
 
 Window:CreateHomeTab({
-    SupportedExecutors = {"MacSploit", "Opiumware", "Delta", "Seliware", "Madium"}, 
+    SupportedExecutors = {"MacSploit", "OpiumwareMac", "Delta", "Seliware", "Madium"}, 
     UnsupportedExecutors = {"Xeno", "Solara"},
     DiscordInvite = "9NyRdmfTgp",
     Backdrop = "81840397943482",
@@ -159,20 +159,14 @@ local PachySlot
 local IsCraftingGear
 local IsCraftingSeeds
 
-local ActivePetUI = PlayerGui:FindFirstChild("ActivePetUI")
-local ActivePetFrame = ActivePetUI:FindFirstChild("Frame")
-local ActivePetMain = ActivePetFrame:FindFirstChild("Main")
-local ActivePetLoadout = ActivePetMain:FindFirstChild("PetLoadout")
-local ActivePetLoadoutMain = ActivePetLoadout:FindFirstChild("Main")
-local ActivePetButtonHolder = ActivePetLoadoutMain:FindFirstChild("ButtonHolder")
-local GearCraftingProximityPrompt
-
 local RequirePassed, CraftingStationHandler = pcall(function()
 	return require(ReplicatedStorage.Modules.CraftingStationHandler)
 end)
 
+local GearCraftingProximityPrompt
+local CraftingTables = workspace.NPCS:FindFirstChild("CraftingTables")
+local GearCraftingProximityPrompt
 local WorkbenchFound, EventCraftingWorkBench = pcall(function()
-	local CraftingTables = workspace.NPCS:FindFirstChild("CraftingTables")
 	local EventCraftingWorkBench = CraftingTables.EventCraftingWorkBench
 	for _, Model in ipairs(EventCraftingWorkBench:GetChildren()) do
 		if Model.Name == "Model" then
@@ -187,8 +181,7 @@ local WorkbenchFound, EventCraftingWorkBench = pcall(function()
 	return EventCraftingWorkBench
 end)
 
-local MyImportant
-
+local ButtonHolder = PlayerGui.ActivePetUI.Frame.Main.PetLoadout.Main.ButtonHolder
 local function SwapToLoadout(LoadoutNum)
 	if LoadoutNum then
 		if LoadoutNum == 2 then
@@ -207,65 +200,57 @@ local function SwapToLoadout(LoadoutNum)
 	end
 end
 
+local GearCraftingProximityPromptConnection
 local function AutoCraftGearLoop()
+	IsCraftingGear = true
 	if not WorkbenchFound then
 		Starlight:Notification({
-			Title = "Error",
-			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-			Content = "You cannot craft items in the tutorial servers.",
+			Title = "Auto-Craft Gear",
+			Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+			Content = "Crafting is not available in the tutorial servers.",
 			Duration = 10,
 		}, "Auto Craft Tut Error")
 		return
 	end
-	if IsCraftingGear then
-		return
-	end
-	IsCraftingGear = true
-    while AutoCraftGearEnabled and GearRecipeSelected[1] do
-		if GearCraftingProximityPrompt.ActionText == "Claim" then
-			SwapToLoadout(PachySlot)
-			GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
-			task.wait(1)
-		elseif GearCraftingProximityPrompt.ActionText ~= "Skip" then
-			GameEvents.CraftingGlobalObjectService:FireServer("Cancel", EventCraftingWorkBench, "GearEventWorkbench")
-			task.wait(1)
+	local GearCrafting
+	local function CraftGear()
+		if GearCrafting or not AutoCraftGearEnabled or not GearRecipeSelected[1] then
+			return
 		end
-		if GearCraftingProximityPrompt.ActionText == "Select Recipe" then
-        	GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", EventCraftingWorkBench, "GearEventWorkbench", GearRecipeSelected[1])
-		end
-		task.wait(1)
-		if not RequirePassed then
-			Starlight:Notification({
-				Title = "Error",
-				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-				Content = "Auto-Craft is not supported on your executor.",
-				Duration = 10,
-			}, "Auto Craft Req Error")
-			break
-		end
-		if GearCraftingProximityPrompt.ActionText == "Submit Item" then
+		GearCrafting = true
+		while GearCraftingProximityPrompt.ActionText ~= "Skip" and AutoCraftGearEnabled and GearRecipeSelected[1] and task.wait(1) do
+			if GearCraftingProximityPrompt.ActionText == "Claim" then
+				SwapToLoadout(PachySlot)
+				GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
+				task.wait(1)
+			elseif GearCraftingProximityPrompt.ActionText ~= "Select Recipe" then
+				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", EventCraftingWorkBench, "GearEventWorkbench")
+				task.wait(1)
+			end
 			SwapToLoadout(OrangutanSlot)
+			GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", EventCraftingWorkBench, "GearEventWorkbench", GearRecipeSelected[1])
+			if not RequirePassed then
+				Starlight:Notification({
+					Title = "Auto-Craft Gear",
+					Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+					Content = "This feature is not supported on your executor.",
+					Duration = 10,
+				}, "Auto Craft Req Error")
+				break
+			end
+			task.wait(1)
 			CraftingStationHandler:SubmitAllRequiredItems(EventCraftingWorkBench)
 			task.wait(1)
 			GameEvents.CraftingGlobalObjectService:FireServer("Craft", EventCraftingWorkBench, "GearEventWorkbench")
 		end
-		if not AutoCraftGearEnabled or not SeedRecipeSelected[1] then
-			break
-		end
-		task.wait(1)
-        repeat
-			SwapToLoadout(ForgerHamsterSlot)
-            task.wait(2)
-        until not AutoCraftGearEnabled or not GearRecipeSelected[1] or GearCraftingProximityPrompt.ActionText ~= "Skip"
-        if AutoCraftGearEnabled and GearRecipeSelected[1] then
-			SwapToLoadout(PachySlot)
-			GameEvents.CraftingGlobalObjectService:FireServer("Claim", EventCraftingWorkBench, "GearEventWorkbench", 1)
-			task.wait(1)
-		end
-    end
-	IsCraftingGear = nil
+		SwapToLoadout(ForgerHamsterSlot)
+		GearCrafting = nil
+	end
+	GearCraftingProximityPromptConnection = GearCraftingProximityPrompt:GetPropertyChangedSignal("ActionText"):Connect(CraftGear)
+	CraftGear()
 end
 
+local MyImportant
 for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 	local Important = Farm.Important
 	local Owner = Important.Data.Owner
@@ -273,6 +258,58 @@ for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 		MyImportant = Important
 		break
 	end
+end
+
+local SeedCraftingProximityPromptConnection
+local function AutoCraftSeedsLoop()
+	IsCraftingSeeds = true
+	if not WorkbenchFound then
+		Starlight:Notification({
+			Title = "Auto-Craft Seeds",
+			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
+			Content = "Crafting is not available in the tutorial servers.",
+			Duration = 10,
+		}, "Auto Craft Tut Error")
+		return
+	end
+	local SeedEventCraftingWorkBench = CraftingTables.SeedEventCraftingWorkBench
+	local SeedCraftingProximityPrompt = SeedEventCraftingWorkBench.Model.BenchTable.CraftingProximityPrompt
+	local SeedCrafting
+	local function CraftSeed()
+		if SeedCrafting or not AutoCraftSeedsEnabled or not SeedRecipeSelected[1] then
+			return
+		end
+		SeedCrafting = true
+		while SeedCraftingProximityPrompt.ActionText ~= "Skip" and AutoCraftSeedsEnabled and SeedRecipeSelected[1] and task.wait(1) do
+			if SeedCraftingProximityPrompt.ActionText == "Claim" then
+				SwapToLoadout(PachySlot)
+				GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
+				task.wait(1)
+			elseif SeedCraftingProximityPrompt.ActionText ~= "Select Recipe" then
+				GameEvents.CraftingGlobalObjectService:FireServer("Cancel", SeedEventCraftingWorkBench, "SeedEventWorkbench")
+				task.wait(1)
+			end
+			SwapToLoadout(OrangutanSlot)
+			GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
+			if not RequirePassed then
+				UILib.Starlight:Notification({
+					Title = "Auto-Craft Seeds",
+					Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+					Content = "This feature is not supported on your executor.",
+					Duration = 10,
+				}, "Auto Craft Req Error")
+				break
+			end
+			task.wait(1)
+			CraftingStationHandler:SubmitAllRequiredItems(SeedEventCraftingWorkBench)
+			task.wait(1)
+			GameEvents.CraftingGlobalObjectService:FireServer("Craft", SeedEventCraftingWorkBench, "SeedEventWorkbench")
+		end
+		SwapToLoadout(ForgerHamsterSlot)
+		SeedCrafting = nil
+	end
+	SeedCraftingProximityPromptConnection = SeedCraftingProximityPrompt:GetPropertyChangedSignal("ActionText"):Connect(CraftSeed)
+	CraftSeed()
 end
 
 local MyPlants = MyImportant:FindFirstChild("Plants_Physical")
@@ -294,90 +331,40 @@ local function SetCosmeticVisibility(Value)
 	end
 end
 
-local function AutoCraftSeedsLoop()
-	if not WorkbenchFound then
-		Starlight:Notification({
-			Title = "Error",
-			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-			Content = "You cannot craft items in the tutorial servers.",
-			Duration = 10,
-		}, "Auto Craft Tut Error")
-		return
-	end
-	if IsCraftingSeeds then
-		return
-	end
-	IsCraftingSeeds = true
-	local SeedEventCraftingWorkBench = workspace.NPCS.CraftingTables.SeedEventCraftingWorkBench
-	local Model = SeedEventCraftingWorkBench.Model
-	local BenchTable = Model.BenchTable
-	local SeedCraftingProximityPrompt = BenchTable.CraftingProximityPrompt
-    while AutoCraftSeedsEnabled and SeedRecipeSelected[1] do
-		if SeedCraftingProximityPrompt.ActionText == "Claim" then
-			SwapToLoadout(PachySlot)
-			GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
-			task.wait(1)
-		elseif SeedCraftingProximityPrompt.ActionText ~= "Skip" then
-			GameEvents.CraftingGlobalObjectService:FireServer("Cancel", SeedEventCraftingWorkBench, "SeedEventWorkbench")
-			task.wait(1)
-		end
-		if SeedCraftingProximityPrompt.ActionText == "Select Recipe" then
-        	GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
-        end
-		task.wait(1)
-		if not RequirePassed then
-			Starlight:Notification({
-				Title = "Error",
-				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
-				Content = "Auto-Craft is not supported on your executor.",
-				Duration = 10,
-			}, "Auto Craft Req Error")
-			break
-		end
-		if SeedCraftingProximityPrompt.ActionText == "Submit Item" then
-			SwapToLoadout(OrangutanSlot)
-        	CraftingStationHandler:SubmitAllRequiredItems(SeedEventCraftingWorkBench)
-        	task.wait(1)
-	        GameEvents.CraftingGlobalObjectService:FireServer("Craft", SeedEventCraftingWorkBench, "SeedEventWorkbench")
-		if not AutoCraftSeedsEnabled or not SeedRecipeSelected[1] then
-			break
-		end
-		task.wait(1)
-        repeat
-			SwapToLoadout(ForgerHamsterSlot)
-            task.wait(2)
-        until not AutoCraftSeedsEnabled or not SeedRecipeSelected[1] or SeedCraftingProximityPrompt.ActionText ~= "Skip"
-        if AutoCraftSeedsEnabled and SeedRecipeSelected[1] then
-			SwapToLoadout(PachySlot)
-			GameEvents.CraftingGlobalObjectService:FireServer("Claim", SeedEventCraftingWorkBench, "SeedEventWorkbench", 1)
-			task.wait(1)
-		end
-    end
-	IsCraftingSeeds = nil
-end
-
 local AutoCraftGear = CraftGroupbox:CreateToggle({
     Name = "Auto-Craft Gear",
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoCraftGearEnabled = Value
-        if Value then
-            task.spawn(AutoCraftGearLoop)
-        end
+		AutoCraftGearEnabled = Value
+		if Value and GearRecipeSelected[1] and not IsCraftingGear then
+			task.spawn(AutoCraftGearLoop)
+		elseif not Value or not GearRecipeSelected[1] then
+			IsCraftingGear = nil
+			if GearCraftingProximityPromptConnection then
+				GearCraftingProximityPromptConnection:Disconnect()
+				GearCraftingProximityPromptConnection = nil
+			end
+		end
     end,
 }, "Auto-Craft Gear Toggle")
 
 local GearRecipes = AutoCraftGear:AddDropdown({
-    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Small Toy", "Small Treat", "Pet Pouch", "Pack Bee", "Silver Ingot", "Gold Ingot", "Chimera Stone", "Black Spotty Egg", "Anti Bee Egg", "Tropical Mist Sprinkler", "Berry Blusher Sprinkler", "Spice Spritzer Sprinkler", "Flower Froster Sprinkler", "Stalk Sprout Sprinkler", "Sweet Soaker Sprinkler", "Mutation Spray Pollinated", "Honey Crafters Crate", "Mutation Spray Glimmering", "Mutation Spray Chilled", "Mutation Spray Shocked", "Mutation Spray Choc"},
+    Options = {"Lightning Rod", "Tanning Mirror", "Reclaimer", "Event Lantern", "Small Toy", "Small Treat", "Pet Pouch", "Silver Ingot", "Gold Ingot", "Chimera Stone", "Black Spotty Egg", "Anti Bee Egg", "Pack Bee", "Tropical Mist Sprinkler", "Berry Blusher Sprinkler", "Spice Spritzer Sprinkler", "Flower Froster Sprinkler", "Stalk Sprout Sprinkler", "Sweet Soaker Sprinkler", "Mutation Spray Pollinated", "Honey Crafters Crate", "Mutation Spray Glimmering", "Mutation Spray Chilled", "Mutation Spray Shocked", "Mutation Spray Choc"},
 	CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no gear recipe selected",
     Callback = function(Options)
-        GearRecipeSelected = Options
-        if AutoCraftGearEnabled then
-            task.spawn(AutoCraftGearLoop)
-        end
+		GearRecipeSelected = Options
+		if Options[1] and AutoCraftGearEnabled and not IsCraftingGear then
+			task.spawn(AutoCraftGearLoop)
+		elseif not Options[1] or not AutoCraftGearEnabled then
+			IsCraftingGear = nil
+			if GearCraftingProximityPromptConnection then
+				GearCraftingProximityPromptConnection:Disconnect()
+				GearCraftingProximityPromptConnection = nil
+			end
+		end
     end,
 }, "Gear Recipe Dropdown")
 
@@ -388,23 +375,35 @@ local AutoCraftSeeds = CraftGroupbox:CreateToggle({
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoCraftSeedsEnabled = Value
-        if Value then
-            task.spawn(AutoCraftSeedsLoop)
-        end
+		AutoCraftSeedsEnabled = Value
+		if Value and SeedRecipeSelected[1] and not IsCraftingSeeds then
+			task.spawn(AutoCraftSeedsLoop)
+		elseif not Value or not SeedRecipeSelected[1] then
+			IsCraftingSeeds = nil
+			if SeedCraftingProximityPromptConnection then
+				SeedCraftingProximityPromptConnection:Disconnect()
+				SeedCraftingProximityPromptConnection = nil
+			end
+		end
     end,
 }, "Auto-Craft Seeds Toggle")
 
 local SeedRecipes = AutoCraftSeeds:AddDropdown({
-	Options = {"Egg Melon", "Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow", "Shadow Spine", "Grand Volcania", "Peace Lily", "Aloe Vera", "Guanabana", "Crafters Seed Pack", "Manuka Flower", "Dandelion", "Lumira", "Honeysuckle", "Bee Balm", "Nectar Thorn", "Suncoil", "Twisted Tangle", "Veinpetal", "Horsetail", "Lingonberry", "Amber Spine"},
+	Options = {"Mandrake", "Evo Apple I", "Evo Apple II", "Evo Apple III", "Evo Apple IV", "Olive", "Hollow Bamboo", "Yarrow", "Shadow Spine", "Egg Melon", "Grand Volcania", "Peace Lily", "Aloe Vera", "Guanabana", "Crafters Seed Pack", "Manuka Flower", "Dandelion", "Lumira", "Honeysuckle", "Bee Balm", "Nectar Thorn", "Suncoil", "Twisted Tangle", "Veinpetal", "Horsetail", "Lingonberry", "Amber Spine"},
     CurrentOptions = {},
     MultipleOptions = false,
     Placeholder = "no seed recipe selected",
     Callback = function(Options)
-        SeedRecipeSelected = Options
-        if AutoCraftSeedsEnabled then
-            task.spawn(AutoCraftSeedsLoop)
-        end
+		SeedRecipeSelected = Options
+		if Options[1] and AutoCraftSeedsEnabled and not IsCraftingSeeds then
+			task.spawn(AutoCraftSeedsLoop)
+		elseif not Options[1] or not AutoCraftSeedsEnabled then
+			IsCraftingSeeds = nil
+			if SeedCraftingProximityPromptConnection then
+				SeedCraftingProximityPromptConnection:Disconnect()
+				SeedCraftingProximityPromptConnection = nil
+			end
+		end
     end,
 }, "Seed Recipe Dropdown")
 
@@ -501,6 +500,14 @@ Starlight:OnDestroy(function()
     PachySlot = nil
     IsCraftingGear = nil
     IsCraftingSeeds = nil
+	if GearCraftingProximityPromptConnection then
+		GearCraftingProximityPromptConnection:Disconnect()
+		GearCraftingProximityPromptConnection = nil
+	end
+	if SeedCraftingProximityPromptConnection then
+		SeedCraftingProximityPromptConnection:Disconnect()
+		SeedCraftingProximityPromptConnection = nil
+	end
 	if MyPlants then
 		SetPlantVisibility(nil)
 	end
