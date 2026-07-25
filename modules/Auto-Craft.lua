@@ -206,7 +206,7 @@ local function AutoCraftGearLoop()
 	if not WorkbenchFound then
 		Starlight:Notification({
 			Title = "Auto-Craft Gear",
-			Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+			Icon = NebulaIcons:GetIcon("ban", "Lucide"),
 			Content = "Crafting is not available in the tutorial servers.",
 			Duration = 10,
 		}, "Auto Craft Tut Error")
@@ -232,7 +232,7 @@ local function AutoCraftGearLoop()
 			if not RequirePassed then
 				Starlight:Notification({
 					Title = "Auto-Craft Gear",
-					Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+					Icon = NebulaIcons:GetIcon("ban", "Lucide"),
 					Content = "This feature is not supported on your executor.",
 					Duration = 10,
 				}, "Auto Craft Req Error")
@@ -292,9 +292,9 @@ local function AutoCraftSeedsLoop()
 			SwapToLoadout(OrangutanSlot)
 			GameEvents.CraftingGlobalObjectService:FireServer("SetRecipe", SeedEventCraftingWorkBench, "SeedEventWorkbench", SeedRecipeSelected[1])
 			if not RequirePassed then
-				UILib.Starlight:Notification({
+				Starlight:Notification({
 					Title = "Auto-Craft Seeds",
-					Icon = UILib.NebulaIcons:GetIcon("ban", "Lucide"),
+					Icon = NebulaIcons:GetIcon("ban", "Lucide"),
 					Content = "This feature is not supported on your executor.",
 					Duration = 10,
 				}, "Auto Craft Req Error")
