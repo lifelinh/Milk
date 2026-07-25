@@ -149,126 +149,117 @@ local GameSettings = Settings:CreateGroupbox({
 	Column = 1,
 }, "Game Settings")
 
-local AutoHoneyIncubateEnabled
-local IsIncubatingHoney
-local AutoJellyIncubateEnabled
-local IsIncubatingJelly
-
-local Modules = ReplicatedStorage:FindFirstChild("Modules")
-local WeeklyEvents = Modules:FindFirstChild("WeeklyEvents")
-local WeeklyEventController = Modules:FindFirstChild("WeeklyEventController")
-local TestEventFolder = WeeklyEventController:FindFirstChild("TestEvent")
-local TestEvent = TestEventFolder:FindFirstChild("TestEvent")
-
-local Incubator = TestEvent:WaitForChild("Incubator")
-local Machine = Incubator:WaitForChild("Machine")
-local InserPart = Machine:WaitForChild("InserPart")
-
-local RoyalJellyMachine = TestEvent:WaitForChild("Royal Jelly Machine")
-local JellyCraftingMachine = RoyalJellyMachine:WaitForChild("JellyCraftingMachine")
-local PromptHolder = JellyCraftingMachine:FindFirstChild("PromptHolder")
-
-local MyImportant
-
-local function IncubateHoneyLoop()
-	if IsIncubatingHoney then
-		return
+local BeeEvent
+do
+	local function Find(Parent, Child)
+		return Parent and Parent:FindFirstChild(Child)
 	end
-	IsIncubatingHoney = true
-	while AutoHoneyIncubateEnabled do
-		local InsertPrompt = InserPart:FindFirstChild("InsertPrompt")
-		if InsertPrompt.ActionText == "Interact" then
+	local Interaction = workspace.Interaction
+	local SaveSlotControllers = Find(ReplicatedStorage:WaitForChild("Modules"), "SaveSlotControllers")
+	local SaveSlotController = Find(SaveSlotControllers, "SaveSlotController")
+	local EventSlotController = Find(SaveSlotController, "EventSlotController")
+	local BizzyBee2026 = Find(EventSlotController, "BizzyBee2026")
+	BeeEvent = Find(BizzyBee2026, "BeeEvent") or Find(Interaction, "BeeEvent")
+end
+
+local HoneyIncubateEnabled
+local IsHoneyIncubating
+local HoneyIncubateConnection
+local function HoneyIncubateLoop()
+	IsHoneyIncubating = true
+	local InsertPrompt = BeeEvent.Incubator.Machine.InserPart.InsertPrompt
+	local HoneyIncubating
+	local function HoneyIncubate()
+		if HoneyIncubating or not HoneyIncubateEnabled then
+			return
+		end
+		if InsertPrompt.ActionText == "Interact" and HoneyIncubateEnabled then
 			Starlight:Notification({
-				Title = "Error",
+				Title = "Auto-Honey Incubate Held Seed",
 				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
 				Content = "You need to be on your Bizzy Bees garden to use this feature.",
 				Duration = 15,
 			}, "Honey Incubator Notif")
-			repeat
-				task.wait(2)
-			until InsertPrompt.ActionText ~= "Interact" or not AutoHoneyIncubateEnabled
+			return
 		end
-		if InsertPrompt.ActionText == "Remove Seed" then
-			task.wait(0.2)
-			GameEvents.BeeQueenHiveRemote:FireServer("RemoveSeed")
-		end
-		if InsertPrompt.ActionText == "Skip Incubator" then
-			repeat
-				task.wait(2)
-			until InsertPrompt.ActionText == "Claim Seed"
-		end
-		if InsertPrompt.ActionText == "Claim Seed" then
-			task.wait(0.2)
-			GameEvents.BeeQueenHiveRemote:FireServer("ClaimSeed")
-		end
-		if InsertPrompt.ActionText == "Insert Seed" then
-			local Character = LocalPlayer.Character
-			local Tool = Character:FindFirstChildOfClass("Tool")
-			if not Tool or not Tool:FindFirstChild("Seed Local Script") then
-				task.wait(2)
-				continue
+		HoneyIncubating = true
+		local Character = LocalPlayer.Character
+		while InsertPrompt.ActionText ~= "Skip Incubator" and HoneyIncubateEnabled and task.wait(1) do
+			if InsertPrompt.ActionText == "Claim Seed" then
+				GameEvents.BeeQueenHiveRemote:FireServer("ClaimSeed")
+				task.wait(1)
 			end
-			GameEvents.BeeQueenHiveRemote:FireServer("SubmitSeed")
-			task.wait(0.2)
-			GameEvents.BeeQueenHiveRemote:FireServer("StartIncubator")
-			task.wait(0.2)
+			if InsertPrompt.ActionText == "Remove Seed" then
+				GameEvents.BeeQueenHiveRemote:FireServer("RemoveSeed")
+				task.wait(1)
+			end
+			local Tool = Character:FindFirstChildOfClass("Tool")
+			if Tool and Tool:FindFirstChild("Seed Local Script") and HoneyIncubateEnabled then
+				GameEvents.BeeQueenHiveRemote:FireServer("SubmitSeed")
+				task.wait(1)
+				GameEvents.BeeQueenHiveRemote:FireServer("StartIncubator")
+				task.wait(1)
+			end
 		end
+		HoneyIncubating = nil
 	end
-	IsIncubatingHoney = nil
+	HoneyIncubateConnection = InsertPrompt:GetPropertyChangedSignal("ActionText"):Connect(HoneyIncubate)
+	HoneyIncubate()
 end
 
-local function IncubateJellyLoop()
-	if IsIncubatingJelly then
-		return
-	end
-	IsIncubatingJelly = true
+local JellyIncubateEnabled
+local IsJellyIncubating
+local JellyIncubateConnection
+local function JellyIncubateLoop()
+	IsJellyIncubating = true
+	local PromptHolder = BeeEvent["Royal Jelly Machine"].JellyCraftingMachine.PromptHolder
 	local InsertPrompt
 	for _, Prompt in ipairs(PromptHolder:GetChildren()) do
 		if Prompt.ActionText == "Submit" or Prompt.ActionText == "Skip" or Prompt.ActionText == "Claim" then
 			InsertPrompt = Prompt
+			break
 		end
 	end
-	while AutoJellyIncubateEnabled do
-		if InsertPrompt.ActionText == "Interact" then
+	local JellyIncubating
+	local function JellyIncubate()
+		if JellyIncubating or not JellyIncubateEnabled then
+			return
+		end
+		if InsertPrompt.ActionText == "Interact" and JellyIncubateEnabled then
 			Starlight:Notification({
-				Title = "Error",
+				Title = "Auto-Jelly Incubate Held Seed",
 				Icon = NebulaIcons:GetIcon("ban", "Lucide"),
 				Content = "You need to be on your Bizzy Bees garden to use this feature.",
 				Duration = 15,
 			}, "Jelly Incubator Notif")
-			repeat
-				task.wait(2)
-			until InsertPrompt.ActionText ~= "Interact" or not AutoJellyIncubateEnabled
+			return
 		end
-		if not InsertPrompt.Enabled then
-			task.wait(0.2)
-			GameEvents.JellyCrafting:FindFirstChild("Remove"):FireServer()
-		end
-		if InsertPrompt.ActionText == "Skip" then
-			repeat
-				task.wait(2)
-			until InsertPrompt.ActionText == "Claim"
-		end
-		if InsertPrompt.ActionText == "Claim" then
-			task.wait(0.2)
-			GameEvents.JellyCrafting.Claim:FireServer()
-		end
-		if InsertPrompt.ActionText == "Submit" then
-			local Character = LocalPlayer.Character
-			local Tool = Character:FindFirstChildOfClass("Tool")
-			if not Tool or not Tool:FindFirstChild("Seed Local Script") then
-				task.wait(2)
-				continue
+		JellyIncubating = true
+		local Character = LocalPlayer.Character
+		while InsertPrompt.ActionText ~= "Skip" and JellyIncubateEnabled and task.wait(1) do
+			if InsertPrompt.ActionText == "Claim" then
+				GameEvents.JellyCrafting.Claim:FireServer()
+				task.wait(1)
 			end
-			GameEvents.JellyCrafting.Submit:FireServer()
-			task.wait(0.2)
-			GameEvents.JellyCrafting.Start:FireServer()
-			task.wait(0.2)
+			if not InsertPrompt.Enabled then
+				GameEvents.JellyCrafting:FindFirstChild("Remove"):FireServer()
+				task.wait(1)
+			end
+			local Tool = Character:FindFirstChildOfClass("Tool")
+			if Tool and Tool:FindFirstChild("Seed Local Script") and JellyIncubateEnabled then
+				GameEvents.JellyCrafting.Submit:FireServer()
+				task.wait(1)
+				GameEvents.JellyCrafting.Start:FireServer()
+				task.wait(1)
+			end
 		end
+		JellyIncubating = nil
 	end
-	IsIncubatingJelly = false
+	JellyIncubateConnection = InsertPrompt:GetPropertyChangedSignal("ActionText"):Connect(JellyIncubate)
+	JellyIncubate()
 end
 
+local MyImportant
 for _, Farm in ipairs(workspace:WaitForChild("Farm"):GetChildren()) do
 	local Important = Farm.Important
 	local Owner = Important.Data.Owner
@@ -302,10 +293,16 @@ local AutoHoneyIncubateToggle = FarmGroupbox:CreateToggle({
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoHoneyIncubateEnabled = Value
-        if Value then
-            task.spawn(IncubateHoneyLoop)
-        end
+		HoneyIncubateEnabled = Value
+		if Value and not IsHoneyIncubating then
+			task.spawn(HoneyIncubateLoop)
+		elseif not Value then
+			IsHoneyIncubating = nil
+			if HoneyIncubateConnection then
+				HoneyIncubateConnection:Disconnect()
+				HoneyIncubateConnection = nil
+			end
+		end
     end,
 }, "Auto Honey Incubator")
 
@@ -314,10 +311,16 @@ local AutoJellyIncubateToggle = FarmGroupbox:CreateToggle({
     CurrentValue = false,
     Style = 2,
     Callback = function(Value)
-        AutoJellyIncubateEnabled = Value
-        if Value then
-            task.spawn(IncubateJellyLoop)
-        end
+		JellyIncubateEnabled = Value
+		if Value and not IsJellyIncubating then
+			task.spawn(JellyIncubateLoop)
+		elseif not Value then
+			IsJellyIncubating = nil
+			if JellyIncubateConnection then
+				JellyIncubateConnection:Disconnect()
+				JellyIncubateConnection = nil
+			end
+		end
     end,
 }, "Auto Jelly Incubator")
 
@@ -373,10 +376,18 @@ local Rejoin = GameSettings:CreateButton({
 }, "Rejoin Game")
 
 Starlight:OnDestroy(function()
-    AutoHoneyIncubateEnabled = nil
-    IsIncubatingHoney = nil
-	AutoJellyIncubateEnabled = nil
-	IsIncubatingJelly = nil
+    HoneyIncubateEnabled = nil
+    IsHoneyIncubating = nil
+	JellyIncubateEnabled = nil
+	IsJellyIncubating = nil
+	if HoneyIncubateConnection then
+		HoneyIncubateConnection:Disconnect()
+		HoneyIncubateConnection = nil
+	end
+	if JellyIncubateConnection then
+		JellyIncubateConnection:Disconnect()
+		JellyIncubateConnection = nil
+	end
 	if MyPlants then
 		SetPlantVisibility(nil)
 	end
