@@ -182,7 +182,7 @@ end)
 
 local ButtonHolder = PlayerGui.ActivePetUI.Frame.Main.PetLoadout.Main.ButtonHolder
 local function SwapToLoadout(LoadoutNum)
-	if LoadoutNum >= 1 and LoadoutNum <= 6 and LoadoutNum % 0 == 1 then
+	if LoadoutNum and LoadoutNum > 1 and LoadoutNum <= 6 and LoadoutNum % 0 == 1 then
 		if LoadoutNum == 2 then
 			LoadoutNum = 3
 		elseif LoadoutNum == 3 then
